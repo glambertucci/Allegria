@@ -81,7 +81,13 @@ return 0;
  #include <stdio.h>
 #include <time.h>
 #include <allegro5/allegro.h>
-#define TOTAL_TIME 15
+
+//cancer 
+
+#include "get_char.h"
+#include "nonblock.h"
+//
+#define TOTAL_TIME 7
 #define MAX_NUM 9
 int main(void)
 {
@@ -134,6 +140,9 @@ int main(void)
 		    if (time_left == 0)
 		    	exit = true;
                 }
+                //CANCER QUE "funca" peor que el orginal
+              // guess = get_char() -'0';
+                //
                 if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
                 {
                   
