@@ -1,39 +1,35 @@
 #ifndef _struct_
 #define _struct_
 
-typedef struct 			// Un puerto de 8 bits visto bit a bit
+#include <allegro5/allegro5.h>
+#include <allegro5/allegro_color.h>
+
+typedef struct
 {
-	char b0 :1;
-	char b1 :1;
-	char b2 :1;
-	char b3 :1;
-	char b4 :1;
-	char b5 :1;
-	char b6 :1;
-	char b7 :1;
+    float position_x;
+    float position_y;
+    int lenght_x;
+    int lenght_y;
+    bool led_on;
+    bool led_enabled;
+    ALLEGRO_BITMAP * bitmap;
+    
+} element;
 
-} b1_t;
-
-
-typedef union			// Union de las dos formas de ver a un registro de 8 bits
+typedef struct
 {
-	char  full_reg;
-	b1_t  eight_reg;
-
-}port_8_t;
-
-typedef struct 				// Un puerto de 16 bits visto de a 8 bits
-{
-	port_8_t portb ;
-	port_8_t porta ;
-
-} b16_t;
-
-typedef union				// Union de las formas de mostrar un registro de 16 bits
-{
-	int full_reg :16;
-	b16_t half_reg;
-
-} port_16_t;
+    element b_0;
+    element b_1;
+    element b_2;
+    element b_3;
+    element b_4;
+    element b_5;
+    element b_6;
+    element b_7;
+    element b_on;
+    element b_off;
+    element b_blink;
+    
+} block;
 
 #endif

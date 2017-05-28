@@ -35,14 +35,10 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/get_char.o \
-	${OBJECTDIR}/get_mask.o \
-	${OBJECTDIR}/nonblock.o \
-	${OBJECTDIR}/operations.o \
-	${OBJECTDIR}/print_status.o \
-	${OBJECTDIR}/string_to_mask.o \
-	${OBJECTDIR}/tp_grupo4.o \
-	${OBJECTDIR}/validation.o
+	${OBJECTDIR}/Main.o \
+	${OBJECTDIR}/init.o \
+	${OBJECTDIR}/input_output.o \
+	${OBJECTDIR}/operations.o
 
 
 # C Compiler Flags
@@ -59,7 +55,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=
+LDLIBSOPTIONS=`pkg-config --libs allegro-5.0` `pkg-config --libs allegro_color-5.0` `pkg-config --libs allegro_primitives-5.0`  
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -67,47 +63,27 @@ LDLIBSOPTIONS=
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/port_simulator: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/port_simulator ${OBJECTFILES} ${LDLIBSOPTIONS}
+	gcc -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/port_simulator ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/get_char.o: get_char.c
+${OBJECTDIR}/Main.o: Main.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/get_char.o get_char.c
+	$(COMPILE.c) -g `pkg-config --cflags allegro-5.0` `pkg-config --cflags allegro_color-5.0` `pkg-config --cflags allegro_primitives-5.0`   -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Main.o Main.c
 
-${OBJECTDIR}/get_mask.o: get_mask.c
+${OBJECTDIR}/init.o: init.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/get_mask.o get_mask.c
+	$(COMPILE.c) -g `pkg-config --cflags allegro-5.0` `pkg-config --cflags allegro_color-5.0` `pkg-config --cflags allegro_primitives-5.0`   -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/init.o init.c
 
-${OBJECTDIR}/nonblock.o: nonblock.c
+${OBJECTDIR}/input_output.o: input_output.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/nonblock.o nonblock.c
+	$(COMPILE.c) -g `pkg-config --cflags allegro-5.0` `pkg-config --cflags allegro_color-5.0` `pkg-config --cflags allegro_primitives-5.0`   -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/input_output.o input_output.c
 
 ${OBJECTDIR}/operations.o: operations.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/operations.o operations.c
-
-${OBJECTDIR}/print_status.o: print_status.c
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/print_status.o print_status.c
-
-${OBJECTDIR}/string_to_mask.o: string_to_mask.c
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/string_to_mask.o string_to_mask.c
-
-${OBJECTDIR}/tp_grupo4.o: tp_grupo4.c
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/tp_grupo4.o tp_grupo4.c
-
-${OBJECTDIR}/validation.o: validation.c
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/validation.o validation.c
+	$(COMPILE.c) -g `pkg-config --cflags allegro-5.0` `pkg-config --cflags allegro_color-5.0` `pkg-config --cflags allegro_primitives-5.0`   -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/operations.o operations.c
 
 # Subprojects
 .build-subprojects:
