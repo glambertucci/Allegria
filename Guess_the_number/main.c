@@ -1,4 +1,4 @@
-#include <stdio.h>
+/*#include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
 #include "get_char.h"
@@ -70,24 +70,26 @@ int main ()
             {
                 printf( "\n%s\n",msg_lost);
             }
-            end_game=0;
+           end_game=0;
                 
       
         
 return 0;
 }
+*/
  //Intento dos
- /*#include <stdio.h>
+ #include <stdio.h>
 #include <time.h>
 #include <allegro5/allegro.h>
-#define TOTAL_TIME 999999999999999999
+#define TOTAL_TIME 15
 #define MAX_NUM 10
 int main(void)
 {
     int win_number;
-    int wined=1;
+    bool wined=false;
     bool exit = false;
     int time_left;
+    int guess=0;
     ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 	ALLEGRO_TIMER *timer = NULL;
         if(!al_init()) {
@@ -118,7 +120,7 @@ int main(void)
         win_number= rand()%MAX_NUM+1;
 	
 	time_left = TOTAL_TIME;
-        
+        printf("win number: %d",win_number);
         al_start_timer(timer);
         while (!exit)
         {
@@ -128,27 +130,52 @@ int main(void)
                 if (ev.type == ALLEGRO_EVENT_TIMER)
                 {
                     --time_left;
-                    printf("Te quedan %d",time_left);
+                    printf("\nTe quedan %d\n",time_left);
 		    if (time_left == 0)
 		    	exit = true;
                 }
                 else if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
                 {
-                    if ( ( ev.keyboard.keycode - '0') == win_number)
+                    switch (ev.keyboard.keycode)
                     {
-                        wined=0;
-			exit = true;
+                        case ALLEGRO_KEY_0: guess = 0; break;
+                        case ALLEGRO_KEY_PAD_0: guess = 0; break;
+                        case ALLEGRO_KEY_1: guess = 1; break;
+                        case ALLEGRO_KEY_PAD_1: guess = 1; break;
+                        case ALLEGRO_KEY_2: guess = 2; break;
+                        case ALLEGRO_KEY_PAD_2: guess = 2; break;
+                        case ALLEGRO_KEY_3: guess = 3; break;
+                        case ALLEGRO_KEY_PAD_3: guess = 3; break;
+                        case ALLEGRO_KEY_4: guess = 4; break;
+                        case ALLEGRO_KEY_PAD_4: guess = 4; break;
+                        case ALLEGRO_KEY_5: guess = 5; break;
+                        case ALLEGRO_KEY_PAD_5: guess = 5; break;
+                        case ALLEGRO_KEY_6: guess = 6; break;
+                        case ALLEGRO_KEY_PAD_6: guess = 6; break;
+                        case ALLEGRO_KEY_7: guess = 7; break;
+                        case ALLEGRO_KEY_PAD_7: guess = 7; break;
+                        case ALLEGRO_KEY_8: guess = 8; break;
+                        case ALLEGRO_KEY_PAD_8: guess = 8; break;
+                        case ALLEGRO_KEY_9: guess = 9; break;
+                        case ALLEGRO_KEY_PAD_9: guess = 9; break;
                     }    
                 }
+                  if (guess == win_number)
+            {
+                wined = true;
+                exit = true;
             }
+            }
+          
         }
-        if (wined==0)
+        if (wined==1)
         {
-            printf("Capo de la life");
+            printf("\nCapo de la life\n");
         }
         else 
         {
-            printf("putovich");
+            printf("\nputovich\n");
         }
         al_destroy_timer(timer);
-}*/
+        al_destroy_event_queue(event_queue);
+}
