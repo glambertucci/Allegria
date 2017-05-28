@@ -82,7 +82,7 @@ return 0;
 #include <time.h>
 #include <allegro5/allegro.h>
 #define TOTAL_TIME 15
-#define MAX_NUM 10
+#define MAX_NUM 9
 int main(void)
 {
     int win_number;
@@ -134,10 +134,11 @@ int main(void)
 		    if (time_left == 0)
 		    	exit = true;
                 }
-                else if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
+                if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
                 {
+                  
                     switch (ev.keyboard.keycode)
-                    {
+                    {                        
                         case ALLEGRO_KEY_0: guess = 0; break;
                         case ALLEGRO_KEY_PAD_0: guess = 0; break;
                         case ALLEGRO_KEY_1: guess = 1; break;
@@ -159,6 +160,7 @@ int main(void)
                         case ALLEGRO_KEY_9: guess = 9; break;
                         case ALLEGRO_KEY_PAD_9: guess = 9; break;
                     }    
+                  
                 }
                   if (guess == win_number)
             {
