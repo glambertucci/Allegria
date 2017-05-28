@@ -136,7 +136,7 @@ int main(void)
                 if (ev.type == ALLEGRO_EVENT_TIMER)
                 {
                     --time_left;
-                    printf("\nTe quedan %d\n",time_left);
+                    printf("\nYou have  %d seconds left\n",time_left);
 		    if (time_left == 0)
 		    	exit = true;
                 }
@@ -181,11 +181,11 @@ int main(void)
         }
         if (wined==1)
         {
-            printf("\nCapo de la life\n");
+            printf("\nCongrats you've won\n");
         }
         else 
         {
-            printf("\nputovich\n");
+            printf("\nTime's up, you've lost \n");
         }
         al_destroy_timer(timer);
         al_destroy_event_queue(event_queue);
