@@ -86,6 +86,7 @@ int main(void)
 {
     int win_number;
     int wined=1;
+    bool exit = false;
     int time_left;
     ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 	ALLEGRO_TIMER *timer = NULL;
@@ -115,23 +116,28 @@ int main(void)
         srand (time(NULL)*3.14);
         
         win_number= rand()%MAX_NUM+1;
+	
+	time_left = TOTAL_TIME;
         
         al_start_timer(timer);
-        while ((wined)&&(time_left==TOTAL_TIME))
+        while (!exit)
         {
             ALLEGRO_EVENT ev;
             if (al_get_next_event(event_queue,&ev))
             {
                 if (ev.type == ALLEGRO_EVENT_TIMER)
                 {
-                    ++time_left;
-                    printf("Te quedan %d",TOTAL_TIME-time_left);
+                    --time_left;
+                    printf("Te quedan %d",time_left);
+		    if (time_left == 0)
+		    	exit = true;
                 }
                 else if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
                 {
-                    if (ev.keyboard.keycode==win_number)
+                    if ( ( ev.keyboard.keycode - '0') == win_number)
                     {
                         wined=0;
+			exit = true;
                     }    
                 }
             }
