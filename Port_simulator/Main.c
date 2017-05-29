@@ -16,6 +16,7 @@
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_color.h>
 #include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_image.h>
 #include "define.h"
 #include "operations.h"
 #include "struct.h"
@@ -79,6 +80,12 @@ int main(void)
         fprintf(stderr,"Allegro not initialized");
         return -1;
     }
+    
+    if(!al_init_image_addon()) 
+    { 
+	fprintf(stderr, "failed to initialize image addon !\n");
+	return -1;
+    }
         // Inicio el teclado
     if (!al_install_keyboard())
     {
@@ -119,9 +126,20 @@ int main(void)
         return -1;
     }
         // Inicializo los bitmaps
+    if (!(all_buttons.b_0.bitmap = al_load_bitmap("open_poke.png")) )
+    {
+        fprintf(stderr, "Image not loaded");
+        return -1;
+    }
     if (!(all_buttons.b_0.bitmap = al_create_bitmap(all_buttons.b_0.lenght_x, all_buttons.b_0.lenght_y)))
     {
         fprintf(stderr, "Bitmap not created");
+        return -1;
+    }
+    
+    if (!(all_buttons.b_1.bitmap = al_load_bitmap("open_poke.png")) )
+    {
+        fprintf(stderr, "Image not loaded");
         return -1;
     }
     
@@ -131,12 +149,24 @@ int main(void)
         al_destroy_bitmap(all_buttons.b_0.bitmap);
         return -1;
     }
+    
+    if (!(all_buttons.b_2.bitmap = al_load_bitmap("open_poke.png")) )
+    {
+        fprintf(stderr, "Image not loaded");
+        return -1;
+    }
 
     if (!(all_buttons.b_2.bitmap = al_create_bitmap(all_buttons.b_2.lenght_x, all_buttons.b_2.lenght_y)))
     {
         fprintf(stderr, "Bitmap not created");
         al_destroy_bitmap(all_buttons.b_0.bitmap);
         al_destroy_bitmap(all_buttons.b_1.bitmap);
+        return -1;
+    }
+    
+    if (!(all_buttons.b_3.bitmap = al_load_bitmap("open_poke.png")) )
+    {
+        fprintf(stderr, "Image not loaded");
         return -1;
     }
 
@@ -148,6 +178,12 @@ int main(void)
         al_destroy_bitmap(all_buttons.b_2.bitmap);
         return -1;
     }
+    
+    if (!(all_buttons.b_4.bitmap = al_load_bitmap("open_poke.png")) )
+    {
+        fprintf(stderr, "Image not loaded");
+        return -1;
+    }
 
     if (!(all_buttons.b_4.bitmap = al_create_bitmap(all_buttons.b_4.lenght_x, all_buttons.b_4.lenght_y)))
     {
@@ -156,6 +192,12 @@ int main(void)
         al_destroy_bitmap(all_buttons.b_1.bitmap);
         al_destroy_bitmap(all_buttons.b_2.bitmap);
         al_destroy_bitmap(all_buttons.b_3.bitmap);
+        return -1;
+    }
+    
+    if (!(all_buttons.b_5.bitmap = al_load_bitmap("open_poke.png")) )
+    {
+        fprintf(stderr, "Image not loaded");
         return -1;
     }
 
@@ -169,6 +211,12 @@ int main(void)
         al_destroy_bitmap(all_buttons.b_4.bitmap);
         return -1;
     }
+    
+    if (!(all_buttons.b_6.bitmap = al_load_bitmap("open_poke.png")) )
+    {
+        fprintf(stderr, "Image not loaded");
+        return -1;
+    }
 
     if (!(all_buttons.b_6.bitmap = al_create_bitmap(all_buttons.b_6.lenght_x, all_buttons.b_6.lenght_y)))
     {
@@ -179,6 +227,12 @@ int main(void)
         al_destroy_bitmap(all_buttons.b_3.bitmap);
         al_destroy_bitmap(all_buttons.b_4.bitmap);
         al_destroy_bitmap(all_buttons.b_5.bitmap);
+        return -1;
+    }
+    
+    if (!(all_buttons.b_7.bitmap = al_load_bitmap("open_poke.png")) )
+    {
+        fprintf(stderr, "Image not loaded");
         return -1;
     }
 
@@ -279,7 +333,27 @@ int main(void)
                 }
                 else if (!mouse && keyboard)
                 {
-                   // FALTA AGREGAR LOS CONTROLES DE TECLADO 
+                    keyboard = false;
+                    switch (key_pressed)
+                    {
+                        case ALLEGRO_KEY_B : button = B_BLINK; break;
+                        case ALLEGRO_KEY_C : button = B_OFF; break;
+                        case ALLEGRO_KEY_S : button = B_ON ; break;
+                        case ALLEGRO_KEY_0 : button = B_0; break;
+                        case ALLEGRO_KEY_1 : button = B_1 ; break;
+                        case ALLEGRO_KEY_2 : button = B_2 ; break;
+                        case ALLEGRO_KEY_3 : button = B_3 ; break;
+                        case ALLEGRO_KEY_4 : button = B_4 ; break;
+                        case ALLEGRO_KEY_5 : button = B_5 ; break;
+                        case ALLEGRO_KEY_6 : button = B_6 ; break;
+                        case ALLEGRO_KEY_7 : button = B_7 ; break;
+                        case ALLEGRO_KEY_ESCAPE : close_display = true; break;
+                        default : button = B_NOT; break;
+                    }
+                    if ( (button != B_NOT) && (close_display != true ) )
+                    {
+                        redraw = true;
+                    }
                 }
             }
         }
