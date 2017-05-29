@@ -18,25 +18,32 @@ void print_display (element * elemento, ALLEGRO_DISPLAY * display, int elementos
     al_clear_to_color(al_color_name("white"));      
     
     for (counter = 0 ; counter < elementos ; ++counter)
-    {
-        al_set_target_bitmap((elemento + counter)->bitmap);
-        
+    {      
         if ((elemento + counter)->led_enabled)
         {
             if ( ( (elemento + counter)->led_on) )
             {
-                al_clear_to_color(al_color_name("green"));
+                if (!((elemento + counter)->bitmap = al_load_bitmap("open_poke.png")) )
+                {
+                    fprintf(stderr, "Image not loaded");
+                    return -1;
+                }
             }
             else if (! ( (elemento + counter)->led_on ) )
             {
-                al_clear_to_color(al_color_name("red"));
+                if (!((elemento + counter)->bitmap = al_load_bitmap("close_poke.png")) )
+                {
+                    fprintf(stderr, "Image not loaded");
+                    return -1;
+                }
             }
         }
         else if (! ( (elemento + counter)->led_enabled))
         {
+            al_set_target_bitmap((elemento + counter)->bitmap);
             al_clear_to_color(al_color_name("hotpink"));
-        }
             al_set_target_bitmap(al_get_backbuffer(display));
+        }
             al_draw_bitmap((elemento + counter)->bitmap,(elemento + counter)->position_x,(elemento + counter)->position_y,0);
 
     }

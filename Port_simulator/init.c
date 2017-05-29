@@ -1,4 +1,5 @@
 #include <allegro5/display.h>
+#include <stdio.h>
 
 #include "init.h"
 #include "struct.h"
@@ -40,19 +41,17 @@ void init_screen (void * buttons, void * screen,const char * color_led_on,const 
     
     for ( contador = 0 ; contador < elementos; ++contador)
     {
-        al_set_target_bitmap((elemento + contador)->bitmap);
         if ((elemento + contador)->led_enabled)
         {
-            al_clear_to_color(al_color_name(color_led_on));
+            (elemento + contador)->bitmap = al_load_bitmap("open_poke.png");
+
         }
         else
         {
-            al_clear_to_color(al_color_name(color_button));
+            (elemento + contador)->bitmap = al_load_bitmap("close_poke.png");
+
         }
     }
-    
-    al_set_target_bitmap(al_get_backbuffer(display));
-    al_clear_to_color(al_color_name(color_screen));
     
     for (contador = 0 ; contador < elementos ; ++contador)
     {
