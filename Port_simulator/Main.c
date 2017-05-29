@@ -22,6 +22,7 @@
 #include "struct.h"
 #include "init.h"
 #include "input_output.h"
+#include "secret.h"
 
 
 
@@ -348,6 +349,10 @@ int main(void)
                         case ALLEGRO_KEY_6 : button = B_6 ; break;
                         case ALLEGRO_KEY_7 : button = B_7 ; break;
                         case ALLEGRO_KEY_ESCAPE : close_display = true; break;
+                        case ALLEGRO_KEY_SPACE : if (secret_game() == (-1))
+                        {
+                            return -1;
+                        }
                         default : button = B_NOT; break;
                     }
                     if ( (button != B_NOT) && (close_display != true ) )
