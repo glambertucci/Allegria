@@ -15,6 +15,7 @@
 void print_display (element * elemento, ALLEGRO_DISPLAY * display, int elementos)
 {
     int counter;
+    al_set_target_bitmap(al_get_backbuffer(display));
     al_clear_to_color(al_color_name("white"));      
     
     for (counter = 0 ; counter < elementos ; ++counter)
