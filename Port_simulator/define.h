@@ -23,10 +23,10 @@
 #define LARGO_Y (90)
 #define SQUARE_X(counter) (ESPACIO_LAT+(counter * ESPACIO_INT) + (counter * LARGO_X ))
 
-#define ESPACIO_LAT_RECT (150)
-#define ESPACIO_INT_RECT (50)
-#define LARGO_RECT_X (200)
-#define LARGO_RECT_Y (50)
+#define ESPACIO_LAT_RECT (58)
+#define ESPACIO_INT_RECT (58)
+#define LARGO_RECT_X (256)
+#define LARGO_RECT_Y (77)
 #define RECTANGLE_X(counter) (ESPACIO_LAT_RECT + (counter * ESPACIO_INT_RECT) + (counter *LARGO_RECT_X))
 
 

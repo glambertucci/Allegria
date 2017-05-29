@@ -12,7 +12,7 @@ void blink_all(element * elemento,ALLEGRO_DISPLAY * display,ALLEGRO_BITMAP * led
             bit_switch(elemento + counter);
         }
         print_display(elemento,display,led_on,led_off, 11);
-        al_rest(0.5);
+        al_rest(0.3);
     }
 }
 void set_all( element * elemento, int elementos)

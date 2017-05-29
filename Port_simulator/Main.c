@@ -51,6 +51,9 @@ int main(void)
     ALLEGRO_TIMER * timer = NULL;
     ALLEGRO_BITMAP * led_on = NULL;
     ALLEGRO_BITMAP * led_off = NULL;
+    ALLEGRO_BITMAP * button_flash = NULL;
+    ALLEGRO_BITMAP * button_charge = NULL;
+    ALLEGRO_BITMAP * button_discharge = NULL;
  
     init_coord (&( all_buttons[B_0]),true,true,NULL);     // declaro los bitmaps y los
     init_coord (&(all_buttons[B_1]),true,true,NULL);     // estados de los leds
@@ -63,7 +66,7 @@ int main(void)
     init_coord (&(all_buttons[B_ON]),false,false,NULL);   
     init_coord (&(all_buttons[B_OFF]),false,false,NULL);
     init_coord (&(all_buttons[B_BLINK]),false,false,NULL);
-    init_coord (&(all_buttons[B_BLINK + 1]),true,false,NULL);       // Indica que es el ultimo elemento del arreglo
+    init_coord (&(all_buttons[B_BLINK + 1]),false,false,NULL);       // Indica que es el ultimo elemento del arreglo
     
 
             
@@ -139,31 +142,37 @@ int main(void)
     
     if (!(led_off = al_load_bitmap("close_poke.png")))
     {
+        al_destroy_bitmap(led_off);
         fprintf(stderr, "Image not loaded");
         return -1;
     }
     
-    if (!(all_buttons[B_ON].bitmap = al_create_bitmap(all_buttons[B_ON].lenght_x, all_buttons[B_ON].lenght_y)))
+    if (!(button_flash = al_load_bitmap("flash.png")))
     {
-        fprintf(stderr, "Bitmap not created");
-        return -1;
-    }
-    if (!(all_buttons[B_OFF].bitmap = al_create_bitmap(all_buttons[B_ON].lenght_x, all_buttons[B_ON].lenght_y)))
-    {
-        fprintf(stderr, "Bitmap not created");
-        al_destroy_bitmap(all_buttons[B_ON].bitmap);
-
-        return -1;
-    }
-    if (!(all_buttons[B_BLINK].bitmap = al_create_bitmap(all_buttons[B_ON].lenght_x, all_buttons[B_ON].lenght_y)))
-    {
-        fprintf(stderr, "Bitmap not created");
-        al_destroy_bitmap(all_buttons[B_ON].bitmap);
-        al_destroy_bitmap(all_buttons[B_OFF].bitmap);
-
+        al_destroy_bitmap(led_off);
+        fprintf(stderr, "Image not loaded");
         return -1;
     }
     
+    if (!(button_charge = al_load_bitmap("charge.png")))
+    {
+        al_destroy_bitmap(led_off);
+        al_destroy_bitmap(button_flash);
+        fprintf(stderr, "Image not loaded");
+        return -1;
+    }
+    
+    if (!(button_discharge = al_load_bitmap("discharge.png")))
+    {
+        al_destroy_bitmap(led_off);
+        al_destroy_bitmap(button_flash);
+        al_destroy_bitmap(button_charge);
+        fprintf(stderr, "Image not loaded");
+        return -1;
+    }
+    all_buttons[B_BLINK].bitmap = button_flash;
+    all_buttons[B_ON].bitmap = button_charge;
+    all_buttons[B_OFF].bitmap = button_discharge;
 
     al_register_event_source(event_line,al_get_display_event_source(display)); // Registro los eventos de
     al_register_event_source(event_line,al_get_keyboard_event_source());       // la pantalla, el timer

@@ -16,7 +16,7 @@ void print_display (element * elemento, ALLEGRO_DISPLAY * display,ALLEGRO_BITMAP
 {
     int counter;
     al_set_target_bitmap(al_get_backbuffer(display));
-    al_clear_to_color(al_color_name("white"));      
+    al_clear_to_color(al_color_name("black"));
     
     for (counter = 0 ; counter < elementos ; ++counter)
     {      
@@ -34,11 +34,8 @@ void print_display (element * elemento, ALLEGRO_DISPLAY * display,ALLEGRO_BITMAP
         }
         else if (! ( (elemento + counter)->led_enabled))
         {
-            al_set_target_bitmap((elemento + counter)->bitmap);
-            al_clear_to_color(al_color_name("hotpink"));
-            al_set_target_bitmap(al_get_backbuffer(display));
+           al_draw_bitmap((elemento + counter)->bitmap,(elemento + counter)->position_x,(elemento + counter)->position_y,0);
         }
-           // al_draw_bitmap((elemento + counter)->bitmap,(elemento + counter)->position_x,(elemento + counter)->position_y,0);
 
     }
 

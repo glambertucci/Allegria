@@ -11,7 +11,7 @@ void init_coord (element * elemento ,bool led_on ,bool led_enabled,ALLEGRO_BITMA
     static int counter2 = 0;
     
     elemento->led_enabled = led_enabled;
-    
+
     if (elemento->led_enabled)
     {
         elemento->position_x = SQUARE_X(counter1); 
@@ -48,7 +48,7 @@ void init_screen (void * buttons, void * screen,ALLEGRO_BITMAP * led_on,ALLEGRO_
         }
         else if (!(elemento + contador)->led_enabled)
         {
-        al_draw_bitmap((elemento + contador)->bitmap, (elemento + contador)->position_x,(elemento + contador)->position_y,0);
+            al_draw_bitmap((elemento + contador)->bitmap, (elemento + contador)->position_x,(elemento + contador)->position_y,0);
     
         }
     }
