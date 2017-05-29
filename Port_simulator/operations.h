@@ -8,7 +8,7 @@
 
 void clr_all( element * elemento, int elementos);
 void set_all( element * elemento, int elementos);
-void blink_all(element * elemento,ALLEGRO_DISPLAY * display,int elementos, int repetir);
+void blink_all(element * elemento,ALLEGRO_DISPLAY * display,ALLEGRO_BITMAP * led_on, ALLEGRO_BITMAP * led_off,int elementos, int repetir);
 void bit_switch (element * elemento);
 
 #endif

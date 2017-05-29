@@ -12,7 +12,7 @@
 #include "define.h"
 
 
-void print_display (element * elemento, ALLEGRO_DISPLAY * display, int elementos)
+void print_display (element * elemento, ALLEGRO_DISPLAY * display,ALLEGRO_BITMAP * led_on, ALLEGRO_BITMAP * led_off, int elementos)
 {
     int counter;
     al_set_target_bitmap(al_get_backbuffer(display));
@@ -24,19 +24,12 @@ void print_display (element * elemento, ALLEGRO_DISPLAY * display, int elementos
         {
             if ( ( (elemento + counter)->led_on) )
             {
-                if (!((elemento + counter)->bitmap = al_load_bitmap("open_poke.png")) )
-                {
-                    fprintf(stderr, "Image not loaded");
-                    return -1;
-                }
+                al_draw_bitmap(led_on,(elemento + counter)->position_x,(elemento + counter)->position_y,0);
+  
             }
             else if (! ( (elemento + counter)->led_on ) )
             {
-                if (!((elemento + counter)->bitmap = al_load_bitmap("close_poke.png")) )
-                {
-                    fprintf(stderr, "Image not loaded");
-                    return -1;
-                }
+                al_draw_bitmap(led_off,(elemento + counter)->position_x,(elemento + counter)->position_y,0);
             }
         }
         else if (! ( (elemento + counter)->led_enabled))
@@ -45,7 +38,7 @@ void print_display (element * elemento, ALLEGRO_DISPLAY * display, int elementos
             al_clear_to_color(al_color_name("hotpink"));
             al_set_target_bitmap(al_get_backbuffer(display));
         }
-            al_draw_bitmap((elemento + counter)->bitmap,(elemento + counter)->position_x,(elemento + counter)->position_y,0);
+           // al_draw_bitmap((elemento + counter)->bitmap,(elemento + counter)->position_x,(elemento + counter)->position_y,0);
 
     }
 

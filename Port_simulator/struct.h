@@ -16,20 +16,5 @@ typedef struct
     
 } element;
 
-typedef struct
-{
-    element b_0;
-    element b_1;
-    element b_2;
-    element b_3;
-    element b_4;
-    element b_5;
-    element b_6;
-    element b_7;
-    element b_on;
-    element b_off;
-    element b_blink;
-    
-} block;
 
 #endif

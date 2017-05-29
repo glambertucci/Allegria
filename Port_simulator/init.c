@@ -33,7 +33,7 @@ void init_coord (element * elemento ,bool led_on ,bool led_enabled,ALLEGRO_BITMA
   
 }
 
-void init_screen (void * buttons, void * screen,const char * color_led_on,const char * color_button, const char * color_screen, int elementos)
+void init_screen (void * buttons, void * screen,ALLEGRO_BITMAP * led_on,ALLEGRO_BITMAP * button, const char * color_screen, int elementos)
 {
     ALLEGRO_DISPLAY * display = screen;
     element * elemento = buttons;
@@ -43,19 +43,14 @@ void init_screen (void * buttons, void * screen,const char * color_led_on,const 
     {
         if ((elemento + contador)->led_enabled)
         {
-            (elemento + contador)->bitmap = al_load_bitmap("open_poke.png");
+            al_draw_bitmap(led_on, (elemento + contador)->position_x,(elemento + contador)->position_y,0);
 
         }
-        else
+        else if (!(elemento + contador)->led_enabled)
         {
-            (elemento + contador)->bitmap = al_load_bitmap("close_poke.png");
-
-        }
-    }
-    
-    for (contador = 0 ; contador < elementos ; ++contador)
-    {
         al_draw_bitmap((elemento + contador)->bitmap, (elemento + contador)->position_x,(elemento + contador)->position_y,0);
+    
+        }
     }
     
     al_flip_display();

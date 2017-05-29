@@ -32,6 +32,7 @@
 #define KEY_A (6)
 #define KEY_D (7)
  
+
 int secret_game(void) 
 {
     ALLEGRO_DISPLAY * display2 = NULL;
@@ -44,11 +45,11 @@ int secret_game(void)
     ALLEGRO_SAMPLE * perdiste = NULL;
     ALLEGRO_SAMPLE * cancion = NULL;
     
-    
     bool key_pressed [8] = {false, false, false, false,false, false, false, false};
     bool close_screen = false;
     bool redraw = false;
     bool lost = false;
+    int time = 0;
     
     float cuadrado_b_x = 0;
     float cuadrado_b_y = 0;
@@ -223,13 +224,14 @@ int secret_game(void)
     al_register_event_source(event_line2,al_get_keyboard_event_source());        // y teclado
     
     al_clear_to_color(al_map_rgb(color,color,color));                           //seteo el mapa en gris
-    al_start_timer(timer2);                                                      // inicia el timer
+                                                        // inicia el timer
     al_flip_display();
     
     al_draw_text(looser_text,al_map_rgb(255,0,255),SCREEN_W/2,SCREEN_H/4,ALLEGRO_ALIGN_CENTER,"Square");
-    al_draw_text(small_text,al_map_rgb(255,0,255),SCREEN_W/2,SCREEN_H/2,ALLEGRO_ALIGN_CENTER,"El blanco se mueve con las flechas y el negro con wsad");
+    al_draw_text(small_text,al_map_rgb(255,0,255),SCREEN_W/2,SCREEN_H/2,ALLEGRO_ALIGN_CENTER,"El blanco se mueve con las flechas, escapa del negro!");
     al_flip_display();
     al_rest(4.0);
+    al_start_timer(timer2);  
     
     al_play_sample(cancion,1.0,0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);            //Pone la musica principal del juego
     
@@ -250,16 +252,16 @@ int secret_game(void)
                 if ( ( key_pressed[KEY_RIGHT] ) && ( cuadrado_b_x <= (SCREEN_W - CUADRADO_SIZE - MOVESPEED) ) )
                     cuadrado_b_x += MOVESPEED;
                 
-                if ( ( cuadrado_n_y >= cuadrado_b_y ) )
+                if (( cuadrado_n_y + CUADRADON_SIZE/2 ) >= ( cuadrado_b_y + CUADRADO_SIZE/2 ) )
                     cuadrado_n_y -= MOVESPEEDN;
-                if ( ( cuadrado_n_y <= cuadrado_b_y) )
+                if ( ( cuadrado_n_y + CUADRADON_SIZE/2 ) <= ( cuadrado_b_y + CUADRADO_SIZE/2 ) )
                     cuadrado_n_y += MOVESPEEDN;
-                if ( ( cuadrado_n_x >= cuadrado_b_x ) )
+                if ( ( cuadrado_n_x + CUADRADON_SIZE/2 ) >= ( cuadrado_b_x + CUADRADO_SIZE/2 ) )
                     cuadrado_n_x -= MOVESPEEDN;
-                if ( ( cuadrado_n_x <= cuadrado_b_x ))
+                if ( ( cuadrado_n_x + CUADRADON_SIZE/2 ) <= ( cuadrado_b_x + CUADRADO_SIZE/2 ))
                     cuadrado_n_x += MOVESPEEDN;
                 
-
+                
                 redraw = true;
             }
             
@@ -303,6 +305,7 @@ int secret_game(void)
             al_clear_to_color(al_map_rgb(color,color,color));
             al_draw_bitmap(cuadrado_b,cuadrado_b_x,cuadrado_b_y,0);
             al_draw_bitmap(cuadrado_n,cuadrado_n_x,cuadrado_n_y,0);
+
             al_flip_display();
             
             if ( (cuadrado_b_x >= cuadrado_n_x) && (cuadrado_b_x <= ( cuadrado_n_x + CUADRADON_SIZE - CUADRADO_SIZE)) &&(cuadrado_b_y >= cuadrado_n_y) && (cuadrado_b_y <= ( cuadrado_n_y + CUADRADON_SIZE - CUADRADO_SIZE) ) )

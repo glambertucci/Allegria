@@ -44,23 +44,27 @@
 
 int main(void) 
 {
-    block all_buttons;
+    element all_buttons [12];
     
     ALLEGRO_DISPLAY * display = NULL;
     ALLEGRO_EVENT_QUEUE * event_line = NULL;
     ALLEGRO_TIMER * timer = NULL;
+    ALLEGRO_BITMAP * led_on = NULL;
+    ALLEGRO_BITMAP * led_off = NULL;
  
-    init_coord (&(all_buttons.b_0),true,true,NULL);     // declaro los bitmaps y los
-    init_coord (&(all_buttons.b_1),true,true,NULL);     // estados de los leds
-    init_coord (&(all_buttons.b_2),true,true,NULL);
-    init_coord (&(all_buttons.b_3),true,true,NULL);
-    init_coord (&(all_buttons.b_4),true,true,NULL);
-    init_coord (&(all_buttons.b_5),true,true,NULL);
-    init_coord (&(all_buttons.b_6),true,true,NULL);
-    init_coord (&(all_buttons.b_7),true,true,NULL);
-    init_coord (&(all_buttons.b_on),false,false,NULL);   
-    init_coord (&(all_buttons.b_off),false,false,NULL);
-    init_coord (&(all_buttons.b_blink),false,false,NULL);
+    init_coord (&( all_buttons[B_0]),true,true,NULL);     // declaro los bitmaps y los
+    init_coord (&(all_buttons[B_1]),true,true,NULL);     // estados de los leds
+    init_coord (&(all_buttons[B_2]),true,true,NULL);
+    init_coord (&(all_buttons[B_3]),true,true,NULL);
+    init_coord (&(all_buttons[B_4]),true,true,NULL);
+    init_coord (&(all_buttons[B_5]),true,true,NULL);
+    init_coord (&(all_buttons[B_6]),true,true,NULL);
+    init_coord (&(all_buttons[B_7]),true,true,NULL);
+    init_coord (&(all_buttons[B_ON]),false,false,NULL);   
+    init_coord (&(all_buttons[B_OFF]),false,false,NULL);
+    init_coord (&(all_buttons[B_BLINK]),false,false,NULL);
+    init_coord (&(all_buttons[B_BLINK + 1]),true,false,NULL);       // Indica que es el ultimo elemento del arreglo
+    
 
             
     bool close_display = false;
@@ -127,180 +131,46 @@ int main(void)
         return -1;
     }
         // Inicializo los bitmaps
-    if (!(all_buttons.b_0.bitmap = al_load_bitmap("open_poke.png")) )
-    {
-        fprintf(stderr, "Image not loaded");
-        return -1;
-    }
-    if (!(all_buttons.b_0.bitmap = al_create_bitmap(all_buttons.b_0.lenght_x, all_buttons.b_0.lenght_y)))
-    {
-        fprintf(stderr, "Bitmap not created");
-        return -1;
-    }
-    
-    if (!(all_buttons.b_1.bitmap = al_load_bitmap("open_poke.png")) )
+    if (!(led_on = al_load_bitmap("open_poke.png")) )
     {
         fprintf(stderr, "Image not loaded");
         return -1;
     }
     
-    if (!(all_buttons.b_1.bitmap = al_create_bitmap(all_buttons.b_1.lenght_x, all_buttons.b_1.lenght_y)))
-    {
-        fprintf(stderr, "Bitmap not created");
-        al_destroy_bitmap(all_buttons.b_0.bitmap);
-        return -1;
-    }
-    
-    if (!(all_buttons.b_2.bitmap = al_load_bitmap("open_poke.png")) )
+    if (!(led_off = al_load_bitmap("close_poke.png")))
     {
         fprintf(stderr, "Image not loaded");
         return -1;
     }
-
-    if (!(all_buttons.b_2.bitmap = al_create_bitmap(all_buttons.b_2.lenght_x, all_buttons.b_2.lenght_y)))
+    
+    if (!(all_buttons[B_ON].bitmap = al_create_bitmap(all_buttons[B_ON].lenght_x, all_buttons[B_ON].lenght_y)))
     {
         fprintf(stderr, "Bitmap not created");
-        al_destroy_bitmap(all_buttons.b_0.bitmap);
-        al_destroy_bitmap(all_buttons.b_1.bitmap);
+        return -1;
+    }
+    if (!(all_buttons[B_OFF].bitmap = al_create_bitmap(all_buttons[B_ON].lenght_x, all_buttons[B_ON].lenght_y)))
+    {
+        fprintf(stderr, "Bitmap not created");
+        al_destroy_bitmap(all_buttons[B_ON].bitmap);
+
+        return -1;
+    }
+    if (!(all_buttons[B_BLINK].bitmap = al_create_bitmap(all_buttons[B_ON].lenght_x, all_buttons[B_ON].lenght_y)))
+    {
+        fprintf(stderr, "Bitmap not created");
+        al_destroy_bitmap(all_buttons[B_ON].bitmap);
+        al_destroy_bitmap(all_buttons[B_OFF].bitmap);
+
         return -1;
     }
     
-    if (!(all_buttons.b_3.bitmap = al_load_bitmap("open_poke.png")) )
-    {
-        fprintf(stderr, "Image not loaded");
-        return -1;
-    }
-
-    if (!(all_buttons.b_3.bitmap = al_create_bitmap(all_buttons.b_3.lenght_x, all_buttons.b_3.lenght_y)))
-    {
-        fprintf(stderr, "Bitmap not created");
-        al_destroy_bitmap(all_buttons.b_0.bitmap);
-        al_destroy_bitmap(all_buttons.b_1.bitmap);
-        al_destroy_bitmap(all_buttons.b_2.bitmap);
-        return -1;
-    }
-    
-    if (!(all_buttons.b_4.bitmap = al_load_bitmap("open_poke.png")) )
-    {
-        fprintf(stderr, "Image not loaded");
-        return -1;
-    }
-
-    if (!(all_buttons.b_4.bitmap = al_create_bitmap(all_buttons.b_4.lenght_x, all_buttons.b_4.lenght_y)))
-    {
-        fprintf(stderr, "Bitmap not created");
-        al_destroy_bitmap(all_buttons.b_0.bitmap);
-        al_destroy_bitmap(all_buttons.b_1.bitmap);
-        al_destroy_bitmap(all_buttons.b_2.bitmap);
-        al_destroy_bitmap(all_buttons.b_3.bitmap);
-        return -1;
-    }
-    
-    if (!(all_buttons.b_5.bitmap = al_load_bitmap("open_poke.png")) )
-    {
-        fprintf(stderr, "Image not loaded");
-        return -1;
-    }
-
-    if (!(all_buttons.b_5.bitmap = al_create_bitmap(all_buttons.b_5.lenght_x, all_buttons.b_5.lenght_y)))
-    {
-        fprintf(stderr, "Bitmap not created");
-        al_destroy_bitmap(all_buttons.b_0.bitmap);
-        al_destroy_bitmap(all_buttons.b_1.bitmap);
-        al_destroy_bitmap(all_buttons.b_2.bitmap);
-        al_destroy_bitmap(all_buttons.b_3.bitmap);
-        al_destroy_bitmap(all_buttons.b_4.bitmap);
-        return -1;
-    }
-    
-    if (!(all_buttons.b_6.bitmap = al_load_bitmap("open_poke.png")) )
-    {
-        fprintf(stderr, "Image not loaded");
-        return -1;
-    }
-
-    if (!(all_buttons.b_6.bitmap = al_create_bitmap(all_buttons.b_6.lenght_x, all_buttons.b_6.lenght_y)))
-    {
-        fprintf(stderr, "Bitmap not created");
-        al_destroy_bitmap(all_buttons.b_0.bitmap);
-        al_destroy_bitmap(all_buttons.b_1.bitmap);
-        al_destroy_bitmap(all_buttons.b_2.bitmap);
-        al_destroy_bitmap(all_buttons.b_3.bitmap);
-        al_destroy_bitmap(all_buttons.b_4.bitmap);
-        al_destroy_bitmap(all_buttons.b_5.bitmap);
-        return -1;
-    }
-    
-    if (!(all_buttons.b_7.bitmap = al_load_bitmap("open_poke.png")) )
-    {
-        fprintf(stderr, "Image not loaded");
-        return -1;
-    }
-
-    if (!(all_buttons.b_7.bitmap = al_create_bitmap(all_buttons.b_7.lenght_x, all_buttons.b_7.lenght_y)))
-    {
-        fprintf(stderr, "Bitmap not created");
-        al_destroy_bitmap(all_buttons.b_0.bitmap);
-        al_destroy_bitmap(all_buttons.b_1.bitmap);
-        al_destroy_bitmap(all_buttons.b_2.bitmap);
-        al_destroy_bitmap(all_buttons.b_3.bitmap);
-        al_destroy_bitmap(all_buttons.b_4.bitmap);
-        al_destroy_bitmap(all_buttons.b_5.bitmap);
-        al_destroy_bitmap(all_buttons.b_6.bitmap);
-        return -1;
-    }
-
-    if (!(all_buttons.b_on.bitmap = al_create_bitmap(all_buttons.b_on.lenght_x, all_buttons.b_on.lenght_y)))
-    {
-        fprintf(stderr, "Bitmap not created");
-        al_destroy_bitmap(all_buttons.b_0.bitmap);
-        al_destroy_bitmap(all_buttons.b_1.bitmap);
-        al_destroy_bitmap(all_buttons.b_2.bitmap);
-        al_destroy_bitmap(all_buttons.b_3.bitmap);
-        al_destroy_bitmap(all_buttons.b_4.bitmap);
-        al_destroy_bitmap(all_buttons.b_5.bitmap);
-        al_destroy_bitmap(all_buttons.b_6.bitmap);
-        al_destroy_bitmap(all_buttons.b_7.bitmap);
-        return -1;
-    }
-
-    if (!(all_buttons.b_off.bitmap = al_create_bitmap(all_buttons.b_off.lenght_x, all_buttons.b_off.lenght_y)))
-    {
-        fprintf(stderr, "Bitmap not created");
-        al_destroy_bitmap(all_buttons.b_0.bitmap);
-        al_destroy_bitmap(all_buttons.b_1.bitmap);
-        al_destroy_bitmap(all_buttons.b_2.bitmap);
-        al_destroy_bitmap(all_buttons.b_3.bitmap);
-        al_destroy_bitmap(all_buttons.b_4.bitmap);
-        al_destroy_bitmap(all_buttons.b_5.bitmap);
-        al_destroy_bitmap(all_buttons.b_6.bitmap);
-        al_destroy_bitmap(all_buttons.b_7.bitmap);
-        al_destroy_bitmap(all_buttons.b_on.bitmap);
-        return -1;
-    }
-
-    if (!(all_buttons.b_blink.bitmap = al_create_bitmap(all_buttons.b_blink.lenght_x, all_buttons.b_blink.lenght_y)))
-    {
-        fprintf(stderr, "Bitmap not created");
-        al_destroy_bitmap(all_buttons.b_0.bitmap);
-        al_destroy_bitmap(all_buttons.b_1.bitmap);
-        al_destroy_bitmap(all_buttons.b_2.bitmap);
-        al_destroy_bitmap(all_buttons.b_3.bitmap);
-        al_destroy_bitmap(all_buttons.b_4.bitmap);
-        al_destroy_bitmap(all_buttons.b_5.bitmap);
-        al_destroy_bitmap(all_buttons.b_6.bitmap);
-        al_destroy_bitmap(all_buttons.b_7.bitmap);
-        al_destroy_bitmap(all_buttons.b_on.bitmap);
-        al_destroy_bitmap(all_buttons.b_off.bitmap);
-        return -1;
-    }
 
     al_register_event_source(event_line,al_get_display_event_source(display)); // Registro los eventos de
     al_register_event_source(event_line,al_get_keyboard_event_source());       // la pantalla, el timer
     al_register_event_source(event_line,al_get_mouse_event_source());          // el mouse y el teclado
     al_register_event_source(event_line,al_get_timer_event_source(timer));
 
-    init_screen ((void *) &(all_buttons.b_0), (void *) display,"green","hotpink","white", 11); // Imprimo en pantalla los bitmaps en sus estados iniciales
+    init_screen ((void *) &(all_buttons[B_0]), (void *) display,led_on,led_off,"white", 11); // Imprimo en pantalla los bitmaps en sus estados iniciales
     al_start_timer(timer);                              // Empiezo el timer
     
     while (!close_display)
@@ -329,7 +199,7 @@ int main(void)
                 if (mouse && !keyboard)
                 {
                     mouse = false;
-                    button = button_pressed (mouse_x, mouse_y, &(all_buttons.b_0), 11); // me fijo que boton aprete
+                    button = button_pressed (mouse_x, mouse_y, &(all_buttons[B_0]), 11); // me fijo que boton aprete
                     redraw = true;
                 }
                 else if (!mouse && keyboard)
@@ -367,31 +237,31 @@ int main(void)
             redraw = false;
             switch (button)
             {
-                case B_0 : bit_switch (&(all_buttons.b_0));     //prendo o apago el led
+                case B_0 : bit_switch (&(all_buttons[B_0]));     //prendo o apago el led
                 break;
-                case B_1 : bit_switch (&(all_buttons.b_1));
+                case B_1 : bit_switch (&(all_buttons[B_1]));
                 break;
-                case B_2 : bit_switch (&(all_buttons.b_2));
+                case B_2 : bit_switch (&(all_buttons[B_2]));
                 break;
-                case B_3 : bit_switch (&(all_buttons.b_3));
+                case B_3 : bit_switch (&(all_buttons[B_3]));
                 break;
-                case B_4 : bit_switch (&(all_buttons.b_4));
+                case B_4 : bit_switch (&(all_buttons[B_4]));
                 break;
-                case B_5 : bit_switch (&(all_buttons.b_5));
+                case B_5 : bit_switch (&(all_buttons[B_5]));
                 break;
-                case B_6 : bit_switch (&(all_buttons.b_6));
+                case B_6 : bit_switch (&(all_buttons[B_6]));
                 break;
-                case B_7 : bit_switch (&(all_buttons.b_7));
+                case B_7 : bit_switch (&(all_buttons[B_7]));
                 break;
-                case B_ON : set_all(&(all_buttons.b_0), 8) ;    //prendo todos los leds
+                case B_ON : set_all(&(all_buttons[B_0]), 8) ;    //prendo todos los leds
                 break;
-                case B_OFF : clr_all (&(all_buttons.b_0),8);    //apago todos los leds
+                case B_OFF : clr_all (&(all_buttons[B_0]),8);    //apago todos los leds
                 break;
-                case B_BLINK :blink_all(&(all_buttons.b_0),display,8, 10); // parpadean los leds
+                case B_BLINK :blink_all(&(all_buttons[B_0]),display,led_on,led_off,8, 10); // parpadean los leds
                 break;
                 case B_NOT :break;
             }
-            print_display(&(all_buttons.b_0),display, 11);
+            print_display(&(all_buttons[B_0]),display,led_on,led_off, 11);
         }
         
     }
@@ -399,17 +269,11 @@ int main(void)
     al_destroy_display(display);                    // Destuyo todo lo que cree
     al_destroy_event_queue(event_line);
     al_destroy_timer(timer);
-    al_destroy_bitmap(all_buttons.b_0.bitmap);
-    al_destroy_bitmap(all_buttons.b_1.bitmap);
-    al_destroy_bitmap(all_buttons.b_2.bitmap);
-    al_destroy_bitmap(all_buttons.b_3.bitmap);
-    al_destroy_bitmap(all_buttons.b_4.bitmap);
-    al_destroy_bitmap(all_buttons.b_5.bitmap);
-    al_destroy_bitmap(all_buttons.b_6.bitmap);
-    al_destroy_bitmap(all_buttons.b_7.bitmap);
-    al_destroy_bitmap(all_buttons.b_on.bitmap);
-    al_destroy_bitmap(all_buttons.b_off.bitmap);
-    al_destroy_bitmap(all_buttons.b_blink.bitmap);
+    al_destroy_bitmap(led_on);
+    al_destroy_bitmap(led_off);
+    al_destroy_bitmap(all_buttons[B_ON].bitmap);
+    al_destroy_bitmap(all_buttons[B_OFF].bitmap);
+    al_destroy_bitmap(all_buttons[B_BLINK].bitmap);
     return (0);
 }
 
