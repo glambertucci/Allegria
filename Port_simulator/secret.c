@@ -250,13 +250,13 @@ int secret_game(void)
                 if ( ( key_pressed[KEY_RIGHT] ) && ( cuadrado_b_x <= (SCREEN_W - CUADRADO_SIZE - MOVESPEED) ) )
                     cuadrado_b_x += MOVESPEED;
                 
-                if ( ( key_pressed[KEY_W] ) && ( cuadrado_n_y >= MOVESPEEDN ) && ( cuadrado_n_y <= ( SCREEN_H - MOVESPEEDN) ) )
+                if ( ( cuadrado_n_y >= cuadrado_b_y ) )
                     cuadrado_n_y -= MOVESPEEDN;
-                if ( ( key_pressed[KEY_S] ) && ( cuadrado_n_y <= (SCREEN_H - CUADRADON_SIZE - MOVESPEEDN) ) )
+                if ( ( cuadrado_n_y <= cuadrado_b_y) )
                     cuadrado_n_y += MOVESPEEDN;
-                if ( ( key_pressed[KEY_A] ) && ( cuadrado_n_x >= MOVESPEEDN ) && ( cuadrado_n_x <= ( SCREEN_W - MOVESPEEDN) ) )
+                if ( ( cuadrado_n_x >= cuadrado_b_x ) )
                     cuadrado_n_x -= MOVESPEEDN;
-                if ( ( key_pressed[KEY_D] ) && ( cuadrado_n_x <= (SCREEN_W - CUADRADON_SIZE - MOVESPEEDN) ) )
+                if ( ( cuadrado_n_x <= cuadrado_b_x ))
                     cuadrado_n_x += MOVESPEEDN;
                 
 
