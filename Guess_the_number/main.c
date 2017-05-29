@@ -171,6 +171,34 @@ int main(void)
                     }    
                   
                 }
+                 if (ev.type == ALLEGRO_EVENT_KEY_UP)
+                {
+                  
+                    switch (ev.keyboard.keycode)
+                    {                        
+                        case ALLEGRO_KEY_0: guess = 0; break;
+                        case ALLEGRO_KEY_PAD_0: guess = 0; break;
+                        case ALLEGRO_KEY_1: guess = 1; break;
+                        case ALLEGRO_KEY_PAD_1: guess = 1; break;
+                        case ALLEGRO_KEY_2: guess = 2; break;
+                        case ALLEGRO_KEY_PAD_2: guess = 2; break;
+                        case ALLEGRO_KEY_3: guess = 3; break;
+                        case ALLEGRO_KEY_PAD_3: guess = 3; break;
+                        case ALLEGRO_KEY_4: guess = 4; break;
+                        case ALLEGRO_KEY_PAD_4: guess = 4; break;
+                        case ALLEGRO_KEY_5: guess = 5; break;
+                        case ALLEGRO_KEY_PAD_5: guess = 5; break;
+                        case ALLEGRO_KEY_6: guess = 6; break;
+                        case ALLEGRO_KEY_PAD_6: guess = 6; break;
+                        case ALLEGRO_KEY_7: guess = 7; break;
+                        case ALLEGRO_KEY_PAD_7: guess = 7; break;
+                        case ALLEGRO_KEY_8: guess = 8; break;
+                        case ALLEGRO_KEY_PAD_8: guess = 8; break;
+                        case ALLEGRO_KEY_9: guess = 9; break;
+                        case ALLEGRO_KEY_PAD_9: guess = 9; break;
+                    }    
+                  
+                }
                   if (guess == win_number)
             {
                 wined = true;
