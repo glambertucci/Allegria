@@ -55,6 +55,8 @@ int main(void)
     ALLEGRO_BITMAP * button_flash = NULL;
     ALLEGRO_BITMAP * button_charge = NULL;
     ALLEGRO_BITMAP * button_discharge = NULL;
+    ALLEGRO_BITMAP * background1 = NULL;
+    ALLEGRO_BITMAP * background2 = NULL;
  
     init_coord (&(all_buttons[B_0]),true,true,NULL);     // declaro los bitmaps y los
     init_coord (&(all_buttons[B_1]),true,true,NULL);     // estados de los leds
@@ -175,12 +177,24 @@ int main(void)
     all_buttons[B_ON].bitmap = button_charge;
     all_buttons[B_OFF].bitmap = button_discharge;
     
-    if (!(display_background = al_load_bitmap("mapa.png")))
+    if (!(background1 = al_load_bitmap("mapa.png")))
     {
         al_destroy_bitmap(led_off);
         al_destroy_bitmap(button_flash);
         al_destroy_bitmap(button_charge);
         al_destroy_bitmap(button_discharge);
+        fprintf(stderr, "Image not loaded");
+        return -1;
+    }
+    
+    if (!(background2 = al_load_bitmap("mapa2.png")))
+    {
+        al_destroy_bitmap(led_off);
+        al_destroy_bitmap(button_flash);
+        al_destroy_bitmap(button_charge);
+        al_destroy_bitmap(button_discharge);
+        al_destroy_bitmap(background1);
+
         fprintf(stderr, "Image not loaded");
         return -1;
     }
@@ -190,6 +204,8 @@ int main(void)
     al_register_event_source(event_line,al_get_mouse_event_source());          // el mouse y el teclado
     al_register_event_source(event_line,al_get_timer_event_source(timer));
 
+    display_background = background1;
+    
     init_screen ((void *) &(all_buttons[B_0]), (void *) display_background,led_on,led_off, 11); // Imprimo en pantalla los bitmaps en sus estados iniciales
     al_start_timer(timer);                              // Empiezo el timer
     
@@ -230,6 +246,8 @@ int main(void)
                         case ALLEGRO_KEY_B : button = B_BLINK; break;
                         case ALLEGRO_KEY_C : button = B_OFF; break;
                         case ALLEGRO_KEY_S : button = B_ON ; break;
+                        case ALLEGRO_KEY_F1 : display_background =background1; redraw = true;button = B_NOT; break;
+                        case ALLEGRO_KEY_F2 :display_background =background2; redraw = true;button = B_NOT; break;
                         case ALLEGRO_KEY_PAD_0:
                         case ALLEGRO_KEY_0 : button = B_0; break;
                         case ALLEGRO_KEY_PAD_1:
@@ -303,7 +321,9 @@ int main(void)
     al_destroy_bitmap(all_buttons[B_ON].bitmap);
     al_destroy_bitmap(all_buttons[B_OFF].bitmap);
     al_destroy_bitmap(all_buttons[B_BLINK].bitmap);
-    al_destroy_bitmap(display_background);
+    al_destroy_bitmap(background1);
+    al_destroy_bitmap(background2);
+    
     return (0);
 }
 

@@ -112,7 +112,7 @@ int secret_game(void)
         return -1;
     }
     
-    if (!(looser_text = al_load_ttf_font("disney.ttf",32,0)))
+    if (!(looser_text = al_load_ttf_font("poke_font.ttf",32,0)))
     {
         fprintf(stderr,"Font not initialized");
         al_destroy_event_queue(event_line2);
@@ -169,7 +169,7 @@ int secret_game(void)
         return -1;
     }
     
-    perdiste = al_load_sample( "guido.wav" );
+    perdiste = al_load_sample( "a.wav" );
     if (!perdiste)
     {
         if (al_filename_exists("a.wav"))
@@ -199,7 +199,7 @@ int secret_game(void)
         return -1;
     } 
     
-    if (!(small_text = al_load_ttf_font("disney.ttf",20,0)))
+    if (!(small_text = al_load_ttf_font("poke_font.ttf",20,0)))
     {
         fprintf(stderr,"Font not initialized");
         al_destroy_sample(perdiste);
@@ -213,6 +213,7 @@ int secret_game(void)
         return -1;  
     }                                                           // Termina de inicializar
     
+    al_set_target_bitmap(al_get_backbuffer(display2));
     al_set_target_bitmap(cuadrado_b);                       // elijo al cuadrado blanco y lo pinto de blanco
     al_clear_to_color(al_map_rgb(255,255,255));
     al_set_target_bitmap(cuadrado_n);                       //Elijo al cuadrado negro y lo pinto de negro
@@ -227,8 +228,9 @@ int secret_game(void)
                                                         // inicia el timer
     al_flip_display();
     
-    al_draw_text(looser_text,al_map_rgb(255,0,255),SCREEN_W/2,SCREEN_H/4,ALLEGRO_ALIGN_CENTER,"Square");
-    al_draw_text(small_text,al_map_rgb(255,0,255),SCREEN_W/2,SCREEN_H/2,ALLEGRO_ALIGN_CENTER,"El blanco se mueve con las flechas, escapa del negro!");
+    al_draw_text(looser_text,al_color_name("white"),SCREEN_W/2,SCREEN_H/4,ALLEGRO_ALIGN_CENTER,"Square");
+    al_draw_text(small_text,al_color_name("white"),SCREEN_W/2,SCREEN_H/2,ALLEGRO_ALIGN_CENTER,"El blanco se mueve con las flechas,");
+    al_draw_text(small_text,al_color_name("white"),SCREEN_W/2,(SCREEN_H/2) + 20,ALLEGRO_ALIGN_CENTER,"escapa del negro!");   
     al_flip_display();
     al_rest(4.0);
     al_start_timer(timer2);  
@@ -314,14 +316,14 @@ int secret_game(void)
                al_flip_display();                                             // al blanco y termina el juego
                lost = true;
                al_destroy_sample(cancion);
-               al_play_sample(perdiste,1.0,0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
+               al_play_sample(perdiste,1.0,0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
             }
         }
         
         if (lost)                   //muestra la pantalla funal, antes de cerrar el display
         {
-            al_draw_text(looser_text,al_color_name("red"),SCREEN_W/2,SCREEN_H/4,ALLEGRO_ALIGN_CENTER,"Perdiste");
             al_draw_rectangle(cuadrado_n_x - EXTRA_SPACE , cuadrado_n_y - EXTRA_SPACE , cuadrado_n_x + EXTRA_SPACE + CUADRADON_SIZE , cuadrado_n_y + EXTRA_SPACE + CUADRADON_SIZE , al_color_name("red") , 5.0 );
+            al_draw_text(looser_text,al_color_name("white"),SCREEN_W/2,SCREEN_H/4,ALLEGRO_ALIGN_CENTER,"Perdiste");
             al_flip_display();
             al_rest(4.0);
             close_screen = true;
