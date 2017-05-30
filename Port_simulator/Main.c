@@ -44,9 +44,10 @@
 
 int main(void) 
 {
-    element all_buttons [12];
+    element all_buttons [11];
     
     ALLEGRO_DISPLAY * display = NULL;
+    ALLEGRO_BITMAP * display_background = NULL;
     ALLEGRO_EVENT_QUEUE * event_line = NULL;
     ALLEGRO_TIMER * timer = NULL;
     ALLEGRO_BITMAP * led_on = NULL;
@@ -55,7 +56,7 @@ int main(void)
     ALLEGRO_BITMAP * button_charge = NULL;
     ALLEGRO_BITMAP * button_discharge = NULL;
  
-    init_coord (&( all_buttons[B_0]),true,true,NULL);     // declaro los bitmaps y los
+    init_coord (&(all_buttons[B_0]),true,true,NULL);     // declaro los bitmaps y los
     init_coord (&(all_buttons[B_1]),true,true,NULL);     // estados de los leds
     init_coord (&(all_buttons[B_2]),true,true,NULL);
     init_coord (&(all_buttons[B_3]),true,true,NULL);
@@ -66,9 +67,9 @@ int main(void)
     init_coord (&(all_buttons[B_ON]),false,false,NULL);   
     init_coord (&(all_buttons[B_OFF]),false,false,NULL);
     init_coord (&(all_buttons[B_BLINK]),false,false,NULL);
-    init_coord (&(all_buttons[B_BLINK + 1]),false,false,NULL);       // Indica que es el ultimo elemento del arreglo
-    
-
+   
+       
+     
             
     bool close_display = false;
     bool mouse = false;
@@ -173,13 +174,23 @@ int main(void)
     all_buttons[B_BLINK].bitmap = button_flash;
     all_buttons[B_ON].bitmap = button_charge;
     all_buttons[B_OFF].bitmap = button_discharge;
+    
+    if (!(display_background = al_load_bitmap("mapa.png")))
+    {
+        al_destroy_bitmap(led_off);
+        al_destroy_bitmap(button_flash);
+        al_destroy_bitmap(button_charge);
+        al_destroy_bitmap(button_discharge);
+        fprintf(stderr, "Image not loaded");
+        return -1;
+    }
 
     al_register_event_source(event_line,al_get_display_event_source(display)); // Registro los eventos de
     al_register_event_source(event_line,al_get_keyboard_event_source());       // la pantalla, el timer
     al_register_event_source(event_line,al_get_mouse_event_source());          // el mouse y el teclado
     al_register_event_source(event_line,al_get_timer_event_source(timer));
 
-    init_screen ((void *) &(all_buttons[B_0]), (void *) display,led_on,led_off,"white", 11); // Imprimo en pantalla los bitmaps en sus estados iniciales
+    init_screen ((void *) &(all_buttons[B_0]), (void *) display_background,led_on,led_off, 11); // Imprimo en pantalla los bitmaps en sus estados iniciales
     al_start_timer(timer);                              // Empiezo el timer
     
     while (!close_display)
@@ -219,19 +230,28 @@ int main(void)
                         case ALLEGRO_KEY_B : button = B_BLINK; break;
                         case ALLEGRO_KEY_C : button = B_OFF; break;
                         case ALLEGRO_KEY_S : button = B_ON ; break;
+                        case ALLEGRO_KEY_PAD_0:
                         case ALLEGRO_KEY_0 : button = B_0; break;
+                        case ALLEGRO_KEY_PAD_1:
                         case ALLEGRO_KEY_1 : button = B_1 ; break;
+                        case ALLEGRO_KEY_PAD_2:
                         case ALLEGRO_KEY_2 : button = B_2 ; break;
+                        case ALLEGRO_KEY_PAD_3:
                         case ALLEGRO_KEY_3 : button = B_3 ; break;
+                        case ALLEGRO_KEY_PAD_4:
                         case ALLEGRO_KEY_4 : button = B_4 ; break;
+                        case ALLEGRO_KEY_PAD_5:
                         case ALLEGRO_KEY_5 : button = B_5 ; break;
+                        case ALLEGRO_KEY_PAD_6:
                         case ALLEGRO_KEY_6 : button = B_6 ; break;
+                        case ALLEGRO_KEY_PAD_7:
                         case ALLEGRO_KEY_7 : button = B_7 ; break;
-                        case ALLEGRO_KEY_ESCAPE : close_display = true; break;
+                        case ALLEGRO_KEY_ESCAPE : close_display = true;break;
                         case ALLEGRO_KEY_SPACE : if (secret_game() == (-1))
                         {
                             return -1;
                         }
+                        al_set_target_bitmap(al_get_backbuffer(display));
                         default : button = B_NOT; break;
                     }
                     if ( (button != B_NOT) && (close_display != true ) )
@@ -266,11 +286,11 @@ int main(void)
                 break;
                 case B_OFF : clr_all (&(all_buttons[B_0]),8);    //apago todos los leds
                 break;
-                case B_BLINK :blink_all(&(all_buttons[B_0]),display,led_on,led_off,8, 10); // parpadean los leds
+                case B_BLINK :blink_all(&(all_buttons[B_0]),(void *) display_background,led_on,led_off,8, 10); // parpadean los leds
                 break;
                 case B_NOT :break;
             }
-            print_display(&(all_buttons[B_0]),display,led_on,led_off, 11);
+            print_display(&(all_buttons[B_0]),(void *) display_background,led_on,led_off, 11);
         }
         
     }
@@ -283,6 +303,7 @@ int main(void)
     al_destroy_bitmap(all_buttons[B_ON].bitmap);
     al_destroy_bitmap(all_buttons[B_OFF].bitmap);
     al_destroy_bitmap(all_buttons[B_BLINK].bitmap);
+    al_destroy_bitmap(display_background);
     return (0);
 }
 

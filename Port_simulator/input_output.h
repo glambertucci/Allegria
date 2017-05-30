@@ -14,7 +14,7 @@
 bool click_button(int mouse_x, int mouse_y, int button_x, int button_y , int lenght_x, int lenght_y );
 
 int button_pressed (int mouse_x, int mouse_y, element * pointer, int elements);
-void print_display (element * elemento, ALLEGRO_DISPLAY * display,ALLEGRO_BITMAP * led_on, ALLEGRO_BITMAP * led_off, int elementos);
+void print_display (element * elemento, void * background,ALLEGRO_BITMAP * led_on, ALLEGRO_BITMAP * led_off, int elementos);
 
 
  #endif 

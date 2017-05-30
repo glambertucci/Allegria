@@ -1,6 +1,6 @@
 #include "operations.h"
 
-void blink_all(element * elemento,ALLEGRO_DISPLAY * display,ALLEGRO_BITMAP * led_on, ALLEGRO_BITMAP * led_off,int elementos, int repetir)
+void blink_all(element * elemento, void * background,ALLEGRO_BITMAP * led_on, ALLEGRO_BITMAP * led_off,int elementos, int repetir)
 {
     int counter, count_repeat;
     
@@ -11,7 +11,7 @@ void blink_all(element * elemento,ALLEGRO_DISPLAY * display,ALLEGRO_BITMAP * led
         {
             bit_switch(elemento + counter);
         }
-        print_display(elemento,display,led_on,led_off, 11);
+        print_display(elemento,(void *) background,led_on,led_off, 11);
         al_rest(0.3);
     }
 }

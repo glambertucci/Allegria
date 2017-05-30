@@ -15,7 +15,7 @@ void init_coord (element * elemento ,bool led_on ,bool led_enabled,ALLEGRO_BITMA
     if (elemento->led_enabled)
     {
         elemento->position_x = SQUARE_X(counter1); 
-        elemento->position_y = SCREEN_H * (0.25);
+        elemento->position_y = 100;
         elemento->lenght_x= LARGO_X;
         elemento->lenght_y= LARGO_Y;
         ++counter1;
@@ -23,7 +23,7 @@ void init_coord (element * elemento ,bool led_on ,bool led_enabled,ALLEGRO_BITMA
     else if (!(elemento->led_enabled))
     {
         elemento->position_x = RECTANGLE_X(counter2); 
-        elemento->position_y = SCREEN_H * (0.75);
+        elemento->position_y = 400;
         elemento->lenght_x= LARGO_RECT_X;
         elemento->lenght_y= LARGO_RECT_Y;
         ++counter2;
@@ -33,11 +33,13 @@ void init_coord (element * elemento ,bool led_on ,bool led_enabled,ALLEGRO_BITMA
   
 }
 
-void init_screen (void * buttons, void * screen,ALLEGRO_BITMAP * led_on,ALLEGRO_BITMAP * button, const char * color_screen, int elementos)
+void init_screen (void * buttons, void * background,ALLEGRO_BITMAP * led_on,ALLEGRO_BITMAP * button, int elementos)
 {
-    ALLEGRO_DISPLAY * display = screen;
+    
     element * elemento = buttons;
     int contador;
+    
+    al_draw_bitmap((ALLEGRO_BITMAP *)background,0,0,0);
     
     for ( contador = 0 ; contador < elementos; ++contador)
     {

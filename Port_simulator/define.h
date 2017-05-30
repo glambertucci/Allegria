@@ -15,7 +15,7 @@
 #define DEFINE_H
 
 #define SCREEN_W (1000)
-#define SCREEN_H (400)
+#define SCREEN_H (527)
 
 #define ESPACIO_LAT (70)
 #define ESPACIO_INT (20)

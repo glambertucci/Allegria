@@ -12,12 +12,12 @@
 #include "define.h"
 
 
-void print_display (element * elemento, ALLEGRO_DISPLAY * display,ALLEGRO_BITMAP * led_on, ALLEGRO_BITMAP * led_off, int elementos)
+void print_display (element * elemento, void * background,ALLEGRO_BITMAP * led_on, ALLEGRO_BITMAP * led_off, int elementos)
 {
     int counter;
-    al_set_target_bitmap(al_get_backbuffer(display));
-    al_clear_to_color(al_color_name("black"));
     
+    al_draw_bitmap((ALLEGRO_BITMAP *)background,0,0,0);
+
     for (counter = 0 ; counter < elementos ; ++counter)
     {      
         if ((elemento + counter)->led_enabled)
