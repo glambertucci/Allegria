@@ -109,10 +109,15 @@ int main(void)
         fprintf(stderr,"Mouse not installed");
         return -1;
     }
-        // Inicio las primitivas (aunque no las use)   ESTAS SE PUEDEN BORRAR SI LAS DEJAS ACTIVAS EN SECRET_GAME
-    if ( !al_init_primitives_addon() )
-    {
-        fprintf(stderr,"Primitives not initialized");
+    if (!al_install_audio())					// Esta inicializacion puede ser al pedo,
+    {											// Yo creo que deberia funcionar
+        fprintf(stderr,"Audio not installed");
+        return -1;  
+    }
+    
+    if (!al_init_acodec_addon())				// Esta inicializacion puede ser al pedo,
+    {											// Yo creo que deberia funcionar
+        fprintf(stderr,"Codec not initialized");
         return -1;
     }
         //Creo el display
@@ -274,6 +279,7 @@ int main(void)
                         case ALLEGRO_KEY_SPACE : 
 				    if (secret_game() == (-1))
                         	    {
+                                        fprintf(stderr, "puto");
                             		return -1;
                         	    }
                         	    al_set_target_bitmap(al_get_backbuffer(display));
@@ -330,6 +336,7 @@ int main(void)
     al_destroy_bitmap(all_buttons[B_BLINK].bitmap);
     al_destroy_bitmap(background1);
     al_destroy_bitmap(background2);
+    al_uninstall_audio();
     
     return (0);
 }

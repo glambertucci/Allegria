@@ -57,22 +57,10 @@ int secret_game(void)
     float cuadrado_n_y = SCREEN_H - CUADRADON_SIZE;
     
     unsigned char color = 33;
-    
-    if (!al_init())                                         // Esta inicializacion puede ser al pedo, 
-    {														// Yo creo que deberia funcionar
-        fprintf(stderr, "Allegro not Initialized");
-        return -1;
-    }
-    
+
     al_init_font_addon();
     al_init_ttf_addon();
-    
-    if (!al_install_keyboard())								// Esta inicializacion puede ser al pedo,
-    {														// Yo creo que deberia funcionar
-        fprintf(stderr, "keyboard couldn't be installed");
-        return -1;
-    }
-    
+
     if (! (cuadrado_b = al_create_bitmap(CUADRADO_SIZE,CUADRADO_SIZE)))
     {
         fprintf(stderr,"Bitmap not Initialized");
@@ -133,30 +121,7 @@ int secret_game(void)
         al_destroy_display(display2);
         return -1; 
     }
-    
-    if (!al_install_audio())					// Esta inicializacion puede ser al pedo,
-    {											// Yo creo que deberia funcionar
-        fprintf(stderr,"Audio not installed");
-        al_destroy_event_queue(event_line2);
-        al_destroy_bitmap(cuadrado_b);
-        al_destroy_bitmap(cuadrado_n);
-        al_destroy_timer(timer2);
-        al_destroy_display(display2);
-        return -1;  
-    }
-    
-    if (!al_init_acodec_addon())				// Esta inicializacion puede ser al pedo,
-    {											// Yo creo que deberia funcionar
-        fprintf(stderr,"Codec not initialized");
-        al_destroy_event_queue(event_line2);
-        al_destroy_bitmap(cuadrado_b);
-        al_destroy_bitmap(cuadrado_n);
-        al_destroy_timer(timer2);
-        al_destroy_display(display2);
-        al_uninstall_audio();
-        return -1;
-    }
-    
+
     if(!(al_reserve_samples(2)))
     {
         fprintf(stderr,"Samples not reserved");
@@ -213,7 +178,6 @@ int secret_game(void)
         return -1;  
     }                                                           // Termina de inicializar
     
-    al_set_target_bitmap(al_get_backbuffer(display2));
     al_set_target_bitmap(cuadrado_b);                       // elijo al cuadrado blanco y lo pinto de blanco
     al_clear_to_color(al_map_rgb(255,255,255));
     al_set_target_bitmap(cuadrado_n);                       //Elijo al cuadrado negro y lo pinto de negro
@@ -343,7 +307,7 @@ int secret_game(void)
     al_destroy_timer(timer2);
     al_destroy_sample(perdiste);
     
-    al_uninstall_audio();
+    
 
     return 0;
 }
