@@ -11,11 +11,11 @@
  * Created on May 27, 2017, 12:22 PM
  */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <stdio.h>			// Esto s epuede borrar
+#include <stdlib.h>			// Esto se `puede borrar
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_color.h>
-#include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_primitives.h>	// si lpo inicializas en la funcion secret_game se puede borrar de aca
 #include <allegro5/allegro_image.h>
 #include "define.h"
 #include "operations.h"
@@ -26,7 +26,7 @@
 
 
 
-#define FPS (60.0)
+#define FPS (60.0)				// Se puede pasar al archivo define.h
 
 #define B_NOT (-1)
 #define B_0 (0)
@@ -109,7 +109,7 @@ int main(void)
         fprintf(stderr,"Mouse not installed");
         return -1;
     }
-        // Inicio las primitivas (aunque no las use)
+        // Inicio las primitivas (aunque no las use)   ESTAS SE PUEDEN BORRAR SI LAS DEJAS ACTIVAS EN SECRET_GAME
     if ( !al_init_primitives_addon() )
     {
         fprintf(stderr,"Primitives not initialized");
@@ -246,8 +246,14 @@ int main(void)
                         case ALLEGRO_KEY_B : button = B_BLINK; break;
                         case ALLEGRO_KEY_C : button = B_OFF; break;
                         case ALLEGRO_KEY_S : button = B_ON ; break;
-                        case ALLEGRO_KEY_F1 : display_background =background1; redraw = true;button = B_NOT; break;
-                        case ALLEGRO_KEY_F2 :display_background =background2; redraw = true;button = B_NOT; break;
+                        case ALLEGRO_KEY_F1 : display_background =background1; 
+				    redraw = true;
+				    button = B_NOT; 
+				    break;
+                        case ALLEGRO_KEY_F2 :display_background =background2;
+				    redraw = true;
+				    button = B_NOT; 
+				    break;
                         case ALLEGRO_KEY_PAD_0:
                         case ALLEGRO_KEY_0 : button = B_0; break;
                         case ALLEGRO_KEY_PAD_1:
@@ -265,11 +271,12 @@ int main(void)
                         case ALLEGRO_KEY_PAD_7:
                         case ALLEGRO_KEY_7 : button = B_7 ; break;
                         case ALLEGRO_KEY_ESCAPE : close_display = true;break;
-                        case ALLEGRO_KEY_SPACE : if (secret_game() == (-1))
-                        {
-                            return -1;
-                        }
-                        al_set_target_bitmap(al_get_backbuffer(display));
+                        case ALLEGRO_KEY_SPACE : 
+				    if (secret_game() == (-1))
+                        	    {
+                            		return -1;
+                        	    }
+                        	    al_set_target_bitmap(al_get_backbuffer(display));
                         default : button = B_NOT; break;
                     }
                     if ( (button != B_NOT) && (close_display != true ) )
