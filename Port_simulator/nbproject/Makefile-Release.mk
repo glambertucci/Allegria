@@ -38,7 +38,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/Main.o \
 	${OBJECTDIR}/init.o \
 	${OBJECTDIR}/input_output.o \
-	${OBJECTDIR}/operations.o
+	${OBJECTDIR}/operations.o \
+	${OBJECTDIR}/secret.o
 
 
 # C Compiler Flags
@@ -84,6 +85,11 @@ ${OBJECTDIR}/operations.o: operations.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/operations.o operations.c
+
+${OBJECTDIR}/secret.o: secret.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/secret.o secret.c
 
 # Subprojects
 .build-subprojects:
