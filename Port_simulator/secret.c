@@ -13,7 +13,7 @@
 
 #include "secret.h"
 
-#define SCREEN_H 700
+#define SCREEN_H 700  // Todos estos define tienen que ir con parentesis, y se tiene que poner a la amyoria en secret.h
 #define SCREEN_W 750
 
 #define FPS 60.0
@@ -23,7 +23,7 @@
 #define MOVESPEEDN 2.0
 #define EXTRA_SPACE 20
 
-#define KEY_UP (0)
+#define KEY_UP (0)			// estos no
 #define KEY_DOWN (1)
 #define KEY_LEFT (2)
 #define KEY_RIGHT (3)
@@ -58,8 +58,8 @@ int secret_game(void)
     
     unsigned char color = 33;
     
-    if (!al_init())                                         //Inicializo allegro y demas
-    {
+    if (!al_init())                                         // Esta inicializacion puede ser al pedo, 
+    {														// Yo creo que deberia funcionar
         fprintf(stderr, "Allegro not Initialized");
         return -1;
     }
@@ -67,8 +67,8 @@ int secret_game(void)
     al_init_font_addon();
     al_init_ttf_addon();
     
-    if (!al_install_keyboard())
-    {
+    if (!al_install_keyboard())								// Esta inicializacion puede ser al pedo,
+    {														// Yo creo que deberia funcionar
         fprintf(stderr, "keyboard couldn't be installed");
         return -1;
     }
@@ -134,8 +134,8 @@ int secret_game(void)
         return -1; 
     }
     
-    if (!al_install_audio())
-    {
+    if (!al_install_audio())					// Esta inicializacion puede ser al pedo,
+    {											// Yo creo que deberia funcionar
         fprintf(stderr,"Audio not installed");
         al_destroy_event_queue(event_line2);
         al_destroy_bitmap(cuadrado_b);
@@ -145,8 +145,8 @@ int secret_game(void)
         return -1;  
     }
     
-    if (!al_init_acodec_addon())
-    {
+    if (!al_init_acodec_addon())				// Esta inicializacion puede ser al pedo,
+    {											// Yo creo que deberia funcionar
         fprintf(stderr,"Codec not initialized");
         al_destroy_event_queue(event_line2);
         al_destroy_bitmap(cuadrado_b);
