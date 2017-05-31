@@ -11,6 +11,7 @@
  * Created on May 27, 2017, 11:26 AM
  */
 
+// Esta es la estructura sobre la cual se trabaja
 #ifndef DEFINE_H
 #define DEFINE_H
 
@@ -29,17 +30,8 @@ typedef struct
     
 } element;
 
-#define SCREEN_W (1000)
-#define SCREEN_H (527)
-
-
-
-
-
-
-
-
-
+#define SCREEN_W (1000)     //Largo y ancho de pantalla 
+#define SCREEN_H (527)      
 
 #endif /* DEFINE_H */
 

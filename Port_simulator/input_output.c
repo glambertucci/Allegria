@@ -1,8 +1,20 @@
-					// funciones
 #include "input_output.h"
 
+//Define para el display instructivo
 
-////////////////////////////////////////////////////////////////////////////////////////
+#define TITLE (0)
+#define INDIVIDUAL_LEDS (1)
+#define FLASH (2)
+#define CHARGE (3)
+#define DISCHARGE (4)
+#define MOUSE (5)
+#define BACKGROUND (6)
+#define LEAVE (7)
+#define INSTRUCTIONS (8)
+
+#define MAX_MESSAGES (9)
+
+//FUNCIONES 
 
 void print_display (void * pointer, void * background,void * led_on_void, void * led_off_void, int elementos)
 {
@@ -35,7 +47,6 @@ void print_display (void * pointer, void * background,void * led_on_void, void *
     }
 
     al_flip_display();
-  
 }
 
 bool click_button(int mouse_x, int mouse_y, int button_x, int button_y , int lenght_x, int lenght_y )
@@ -73,19 +84,6 @@ int button_pressed (int mouse_x, int mouse_y, void * pointer2, int elements)
     
     return counter;
 }
-
-
-#define TITLE (0)
-#define INDIVIDUAL_LEDS (1)
-#define FLASH (2)
-#define CHARGE (3)
-#define DISCHARGE (4)
-#define MOUSE (5)
-#define BACKGROUND (6)
-#define LEAVE (7)
-#define INSTRUCTIONS (8)
-
-#define MAX_MESSAGES (9)
 
 int display_instructions (const char * archivo_letra_titulo, const char * archivo_letra_cuerpo, const char * color_letra)
 {
@@ -132,7 +130,7 @@ int display_instructions (const char * archivo_letra_titulo, const char * archiv
         return -1;
     }
     
-    if (!(body = al_load_ttf_font(archivo_letra_cuerpo, 20,0))) // // Carga la fuente del cuerpo
+    if (!(body = al_load_ttf_font(archivo_letra_cuerpo, 20,0))) // Carga la fuente del cuerpo
     {
         al_destroy_display(instruction_display);
         al_destroy_event_queue(event_line_ins);

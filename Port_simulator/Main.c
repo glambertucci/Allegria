@@ -11,38 +11,57 @@
  * Created on May 27, 2017, 12:22 PM
  */
 
+//Trabajo Práctico n°9
+//SIMULACIÓN DE PUERTO 
+/*Fecha de Creación: 27/05/2017
+Grupo 4
+Integrantes:	Dell'isola Lucas  (58.025)
+		Lambertucci Guido (58.009)
+		Tolaba Francisco  (58.424)
+
+ * Este programa simula el encendido y apagado de los led,
+ * permite la interacción tanto con el mouse como con el teclado
+ * las teclas para switchear los led son del 0 al 9, o clickear con el mouse
+ * y para las funciones de todo prendido y todo apagado se apretan las letras 
+ * s y c respectivamente y para el parpaedo con la letra, o bien las tres 
+ * funciones se pueden clickear en pantalla 
+*/
+
 #include <stdio.h>
-#include <allegro5/allegro5.h>
-#include <allegro5/allegro_color.h>
-#include <allegro5/allegro_image.h>
+#include <allegro5/allegro5.h> 
+#include <allegro5/allegro_color.h> 
+#include <allegro5/allegro_image.h> 
 #include <allegro5/allegro_acodec.h>
 #include <allegro5/allegro_audio.h>
+
+
 #include "define.h"
-#include "operations.h"
-#include "input_output.h"
+#include "operations.h" //Para el switcheo, todo prendido o apagado o parpadeo
+#include "input_output.h" //Para el ingreso del usuario y la impresion en pantalla
 
 
+#define FPS (60.0)	// Velocidad de refresh por segundo
 
-#define FPS (60.0)				// Se puede pasar al archivo define.h
-
+//Defines para los botones
 #define B_NOT (-1)
-#define B_0 (0)
+#define B_0 (0)     //Led 0
 #define B_1 (1)
 #define B_2 (2)
 #define B_3 (3)
 #define B_4 (4)
 #define B_5 (5)
 #define B_6 (6)
-#define B_7 (7)
-#define B_ON (8)
-#define B_OFF (9)
-#define B_BLINK (10)
+#define B_7 (7)     //Led 7
+#define B_ON (8)    //Boton todo encendido
+#define B_OFF (9)   //Boton todo apagado
+#define B_BLINK (10)    //Boton parpadeo
 
 
 int main(void) 
 {
     element all_buttons [11];
     
+    //Inicialización de los punteros  
     ALLEGRO_DISPLAY * display = NULL;
     ALLEGRO_BITMAP * display_background = NULL;
     ALLEGRO_EVENT_QUEUE * event_line = NULL;
@@ -57,8 +76,7 @@ int main(void)
     ALLEGRO_SAMPLE * led_on_music = NULL;
     ALLEGRO_SAMPLE * back_music = NULL;
 
-
- 
+    
     init_coord ((void *) &(all_buttons[B_0]),true,true,(void *) NULL);     // declaro los bitmaps y los
     init_coord ((void *) &(all_buttons[B_1]),true,true,(void *) NULL);     // estados de los leds
     init_coord ((void *) &(all_buttons[B_2]),true,true,(void *) NULL);
@@ -70,21 +88,24 @@ int main(void)
     init_coord ((void *) &(all_buttons[B_ON]),false,false,(void *) NULL);   
     init_coord ((void *) &(all_buttons[B_OFF]),false,false,(void *) NULL);
     init_coord ((void *) &(all_buttons[B_BLINK]),false,false,(void *) NULL);
-    
-    bool close_display = false;
-    bool mouse = false;
-    bool keyboard = false;
-    bool redraw = false;
+   
+    //Variables bool para verificar estados 
+    bool close_display = false;     //Si se cerro el display
+    bool mouse = false;             //Interaccion con el mouse
+    bool keyboard = false;          //Interaccion con el teclado
+    bool redraw = false;            //Reimpresion 
 
-
+    //Coordenadas de mouse
     int mouse_x = 0;
     int mouse_y = 0;
     
+    //Para ingreso por teclado 
     char key_pressed = 0;
     
+    //Seteo boton de seguimiento
     int button = B_NOT;
     
-        //Inicio allegro
+    //Inicio allegro
     if (!al_init())
     {
         fprintf(stderr,"Allegro not initialized");
@@ -113,7 +134,6 @@ int main(void)
         fprintf(stderr,"Audio not installed");
         return -1;  
     }
-    
     if (!al_init_acodec_addon())				// 
     {											
         fprintf(stderr,"Codec not initialized");
@@ -146,14 +166,12 @@ int main(void)
         fprintf(stderr, "Image not loaded");
         return -1;
     }
-    
     if (!(led_off = al_load_bitmap("close_poke.png")))
     {
         al_destroy_bitmap(led_off);
         fprintf(stderr, "Image not loaded");
         return -1;
     }
-    
     if (!(button_flash = al_load_bitmap("flash.png")))
     {
         al_destroy_bitmap(led_off);
@@ -168,7 +186,6 @@ int main(void)
         fprintf(stderr, "Image not loaded");
         return -1;
     }
-    
     if (!(button_discharge = al_load_bitmap("discharge.png")))
     {
         al_destroy_bitmap(led_off);
@@ -190,7 +207,6 @@ int main(void)
         fprintf(stderr, "Image not loaded");
         return -1;
     }
-    
     if (!(background2 = al_load_bitmap("mapa2.png")))
     {
         al_destroy_bitmap(led_off);
@@ -441,7 +457,7 @@ int main(void)
     al_destroy_sample(back_music);
     al_uninstall_audio();
     
-    return (0);
+    return 0;
 }
 
 
