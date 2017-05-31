@@ -214,11 +214,11 @@ int main(void)
         al_uninstall_audio();
         return -1;
     }
-    if (!(led_on_music = al_load_sample( "ison.wav" )))
+    if (!(led_on_music = al_load_sample( "led_sound.wav" )))
     {
-        if (al_filename_exists("ison.wav"))
+        if (al_filename_exists("led_sound.wav"))
             fprintf(stderr,"Existe\n");
-        fprintf(stderr,"Sample1 not loaded");
+        fprintf(stderr,"Sample not loaded");
         al_destroy_bitmap(led_off);
         al_destroy_bitmap(button_flash);
         al_destroy_bitmap(button_charge);
