@@ -14,20 +14,25 @@
 #ifndef DEFINE_H
 #define DEFINE_H
 
+#include <allegro5/allegro5.h>
+#include <allegro5/allegro_color.h>
+
+typedef struct
+{
+    float position_x;
+    float position_y;
+    int lenght_x;
+    int lenght_y;
+    bool led_on;
+    bool led_enabled;
+    ALLEGRO_BITMAP * bitmap;
+    
+} element;
+
 #define SCREEN_W (1000)
 #define SCREEN_H (527)
 
-#define ESPACIO_LAT (70)
-#define ESPACIO_INT (20)
-#define LARGO_X (90)
-#define LARGO_Y (90)
-#define SQUARE_X(counter) (ESPACIO_LAT+(counter * ESPACIO_INT) + (counter * LARGO_X ))
 
-#define ESPACIO_LAT_RECT (58)
-#define ESPACIO_INT_RECT (58)
-#define LARGO_RECT_X (256)
-#define LARGO_RECT_Y (77)
-#define RECTANGLE_X(counter) (ESPACIO_LAT_RECT + (counter * ESPACIO_INT_RECT) + (counter *LARGO_RECT_X))
 
 
 
