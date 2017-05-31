@@ -232,8 +232,10 @@ int secret_game(void)
             }
             
             else if ((event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) )      //cierra el display
+            {
                 close_screen = true;
-            
+            }
+
             else if (event.type == ALLEGRO_EVENT_KEY_DOWN)              //permite que los cuadrados
             {                                                           //cambien de posicion
                 switch (event.keyboard.keycode)
@@ -276,7 +278,7 @@ int secret_game(void)
             
             if ( (cuadrado_b_x >= cuadrado_n_x) && (cuadrado_b_x <= ( cuadrado_n_x + CUADRADON_SIZE - CUADRADO_SIZE)) &&(cuadrado_b_y >= cuadrado_n_y) && (cuadrado_b_y <= ( cuadrado_n_y + CUADRADON_SIZE - CUADRADO_SIZE) ) )
             {
-               al_clear_to_color(al_map_rgb(color,color,color));              //Indica que el ucadrado negro ha alcanzado
+               al_clear_to_color(al_map_rgb(color,color,color));              //Indica que el cuadrado negro ha alcanzado
                al_flip_display();                                             // al blanco y termina el juego
                lost = true;
                al_destroy_sample(cancion);
@@ -284,7 +286,7 @@ int secret_game(void)
             }
         }
         
-        if (lost)                   //muestra la pantalla funal, antes de cerrar el display
+        if (lost)                   //muestra la pantalla final, antes de cerrar el display
         {
             al_draw_rectangle(cuadrado_n_x - EXTRA_SPACE , cuadrado_n_y - EXTRA_SPACE , cuadrado_n_x + EXTRA_SPACE + CUADRADON_SIZE , cuadrado_n_y + EXTRA_SPACE + CUADRADON_SIZE , al_color_name("red") , 5.0 );
             al_draw_text(looser_text,al_color_name("white"),SCREEN_W/2,SCREEN_H/4,ALLEGRO_ALIGN_CENTER,"Perdiste");

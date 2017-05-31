@@ -11,11 +11,11 @@
  * Created on May 27, 2017, 12:22 PM
  */
 
-#include <stdio.h>			// Esto s epuede borrar
-#include <stdlib.h>			// Esto se `puede borrar
+#include <stdio.h>			 
+#include <stdlib.h>			
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_color.h>
-#include <allegro5/allegro_primitives.h>	// si lpo inicializas en la funcion secret_game se puede borrar de aca
+#include <allegro5/allegro_primitives.h>	
 #include <allegro5/allegro_image.h>
 #include "define.h"
 #include "operations.h"
@@ -57,6 +57,9 @@ int main(void)
     ALLEGRO_BITMAP * button_discharge = NULL;
     ALLEGRO_BITMAP * background1 = NULL;
     ALLEGRO_BITMAP * background2 = NULL;
+    ALLEGRO_SAMPLE * led_on_music = NULL;
+    ALLEGRO_SAMPLE * back_music = NULL;
+
  
     init_coord (&(all_buttons[B_0]),true,true,NULL);     // declaro los bitmaps y los
     init_coord (&(all_buttons[B_1]),true,true,NULL);     // estados de los leds
@@ -77,6 +80,7 @@ int main(void)
     bool mouse = false;
     bool keyboard = false;
     bool redraw = false;
+
     
     int mouse_x = 0;
     int mouse_y = 0;
@@ -109,14 +113,14 @@ int main(void)
         fprintf(stderr,"Mouse not installed");
         return -1;
     }
-    if (!al_install_audio())					// Esta inicializacion puede ser al pedo,
-    {											// Yo creo que deberia funcionar
+    if (!al_install_audio())					//
+    {								
         fprintf(stderr,"Audio not installed");
         return -1;  
     }
     
-    if (!al_init_acodec_addon())				// Esta inicializacion puede ser al pedo,
-    {											// Yo creo que deberia funcionar
+    if (!al_init_acodec_addon())				// 
+    {											
         fprintf(stderr,"Codec not initialized");
         return -1;
     }
@@ -203,6 +207,50 @@ int main(void)
         fprintf(stderr, "Image not loaded");
         return -1;
     }
+    if(!(al_reserve_samples(2)))
+    {
+        fprintf(stderr,"Samples not reserved");
+        al_destroy_bitmap(led_off);
+        al_destroy_bitmap(button_flash);
+        al_destroy_bitmap(button_charge);
+        al_destroy_bitmap(button_discharge);
+        al_destroy_bitmap(background1);
+        al_destroy_bitmap(background2);
+        al_uninstall_audio();
+        return -1;
+    }
+    led_on_music = al_load_sample( "ison.wav" );
+    if (!led_on_music)
+    {
+        if (al_filename_exists("ison.wav"))
+            fprintf(stderr,"Existe\n");
+        fprintf(stderr,"Sample1 not loaded");
+        al_destroy_bitmap(led_off);
+        al_destroy_bitmap(button_flash);
+        al_destroy_bitmap(button_charge);
+        al_destroy_bitmap(button_discharge);
+        al_destroy_bitmap(background1);
+        al_destroy_bitmap(background2);
+        al_uninstall_audio();
+        return -1;
+    }
+
+    back_music = al_load_sample( "back_music.wav" );
+    if (!back_music)
+    {
+        fprintf(stderr,"back not loaded");
+        if (al_filename_exists("back.ogg"))
+            fprintf(stderr,"Existe\n");
+            al_destroy_bitmap(led_off);
+            al_destroy_bitmap(button_flash);
+            al_destroy_bitmap(button_charge);
+            al_destroy_bitmap(button_discharge);
+            al_destroy_bitmap(background1);
+            al_destroy_bitmap(background2);
+            al_uninstall_audio();
+
+        return -1;
+    }
 
     al_register_event_source(event_line,al_get_display_event_source(display)); // Registro los eventos de
     al_register_event_source(event_line,al_get_keyboard_event_source());       // la pantalla, el timer
@@ -214,6 +262,8 @@ int main(void)
     init_screen ((void *) &(all_buttons[B_0]), (void *) display_background,led_on,led_off, 11); // Imprimo en pantalla los bitmaps en sus estados iniciales
     al_start_timer(timer);                              // Empiezo el timer
     
+    al_play_sample(back_music,0.75,0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL); 
+
     while (!close_display)
     {
         ALLEGRO_EVENT event;
@@ -279,7 +329,7 @@ int main(void)
                         case ALLEGRO_KEY_SPACE : 
 				    if (secret_game() == (-1))
                         	    {
-                                        fprintf(stderr, "puto");
+                                        fprintf(stderr, "fatal error");
                             		return -1;
                         	    }
                         	    al_set_target_bitmap(al_get_backbuffer(display));
@@ -292,26 +342,45 @@ int main(void)
                 }
             }
         }
-        if ( redraw && al_event_queue_is_empty(event_line))
+
+//        led_on_music = al_load_sample( "ison.wav" );
+        
+	if ( redraw && al_event_queue_is_empty(event_line))
         {
             redraw = false;
             switch (button)
             {
                 case B_0 : bit_switch (&(all_buttons[B_0]));     //prendo o apago el led
-                break;
+                           if ( (&(all_buttons[B_0]))->led_on)
+                           al_play_sample(led_on_music,1.0,0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
+		break;
                 case B_1 : bit_switch (&(all_buttons[B_1]));
+                           if ( (&(all_buttons[B_1]))->led_on)
+                           al_play_sample(led_on_music,1.0,0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
                 break;
                 case B_2 : bit_switch (&(all_buttons[B_2]));
+                           if ( (&(all_buttons[B_2]))->led_on)
+                           al_play_sample(led_on_music,1.0,0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
                 break;
                 case B_3 : bit_switch (&(all_buttons[B_3]));
+                           if ( (&(all_buttons[B_3]))->led_on)
+                           al_play_sample(led_on_music,1.0,0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
                 break;
                 case B_4 : bit_switch (&(all_buttons[B_4]));
+                           if ( (&(all_buttons[B_4]))->led_on)
+                           al_play_sample(led_on_music,1.0,0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
                 break;
                 case B_5 : bit_switch (&(all_buttons[B_5]));
+                           if ( (&(all_buttons[B_5]))->led_on)
+                           al_play_sample(led_on_music,1.0,0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
                 break;
                 case B_6 : bit_switch (&(all_buttons[B_6]));
+                           if ( (&(all_buttons[B_6]))->led_on)
+                           al_play_sample(led_on_music,1.0,0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
                 break;
                 case B_7 : bit_switch (&(all_buttons[B_7]));
+                           if ( (&(all_buttons[B_7]))->led_on)
+                           al_play_sample(led_on_music,1.0,0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
                 break;
                 case B_ON : set_all(&(all_buttons[B_0]), 8) ;    //prendo todos los leds
                 break;
@@ -326,6 +395,9 @@ int main(void)
         
     }
     
+    al_stop_samples();  
+
+
     al_destroy_display(display);                    // Destuyo todo lo que cree
     al_destroy_event_queue(event_line);
     al_destroy_timer(timer);
@@ -336,6 +408,8 @@ int main(void)
     al_destroy_bitmap(all_buttons[B_BLINK].bitmap);
     al_destroy_bitmap(background1);
     al_destroy_bitmap(background2);
+    al_destroy_sample(led_on_music);
+    al_destroy_sample(back_music);
     al_uninstall_audio();
     
     return (0);

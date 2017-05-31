@@ -36,10 +36,9 @@ void clr_all( element * elemento, int elementos)
 }
 
 
-
-
 void bit_switch (element * elemento)
 {
+  
     if (elemento->led_on)
     {
         elemento->led_on = false;
@@ -47,5 +46,6 @@ void bit_switch (element * elemento)
     else if (!elemento->led_on)
     {
         elemento->led_on = true;
+	
     }
 }
