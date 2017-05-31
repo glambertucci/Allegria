@@ -16,7 +16,7 @@
       <itemPath>close_poke.png</itemPath>
       <itemPath>discharge.png</itemPath>
       <itemPath>flash.png</itemPath>
-      <itemPath>ison.wav</itemPath>
+      <itemPath>led_sound.wav</itemPath>
       <itemPath>mapa.png</itemPath>
       <itemPath>mapa2.png</itemPath>
       <itemPath>open_poke.png</itemPath>
@@ -101,7 +101,7 @@
       </item>
       <item path="input_output.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ison.wav" ex="false" tool="3" flavor2="0">
+      <item path="led_sound.wav" ex="false" tool="3" flavor2="0">
       </item>
       <item path="mapa.png" ex="false" tool="3" flavor2="0">
       </item>
@@ -154,7 +154,7 @@
       </item>
       <item path="input_output.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ison.wav" ex="false" tool="3" flavor2="0">
+      <item path="led_sound.wav" ex="false" tool="3" flavor2="0">
       </item>
       <item path="mapa.png" ex="false" tool="3" flavor2="0">
       </item>
