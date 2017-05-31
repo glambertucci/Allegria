@@ -14,7 +14,7 @@ void blink_all(void * element_pointer, void * background,void * led_on_void, voi
         {
             bit_switch(elemento + counter);
         }
-        print_display(element_pointer,(void *) background,led_on_void,led_off_void, 11);
+        print_display(element_pointer,(void *) background,led_on_void,led_off_void, 11);    //acá esta el problema con el back y frontend
         al_rest(0.3);
     }
 }
