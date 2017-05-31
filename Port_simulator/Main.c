@@ -11,18 +11,15 @@
  * Created on May 27, 2017, 12:22 PM
  */
 
-#include <stdio.h>			 
-#include <stdlib.h>			
+#include <stdio.h>
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_color.h>
-#include <allegro5/allegro_primitives.h>	
 #include <allegro5/allegro_image.h>
+#include <allegro5/allegro_acodec.h>
+#include <allegro5/allegro_audio.h>
 #include "define.h"
 #include "operations.h"
-#include "struct.h"
-#include "init.h"
 #include "input_output.h"
-#include "secret.h"
 
 
 
@@ -60,28 +57,26 @@ int main(void)
     ALLEGRO_SAMPLE * led_on_music = NULL;
     ALLEGRO_SAMPLE * back_music = NULL;
 
+
  
-    init_coord (&(all_buttons[B_0]),true,true,NULL);     // declaro los bitmaps y los
-    init_coord (&(all_buttons[B_1]),true,true,NULL);     // estados de los leds
-    init_coord (&(all_buttons[B_2]),true,true,NULL);
-    init_coord (&(all_buttons[B_3]),true,true,NULL);
-    init_coord (&(all_buttons[B_4]),true,true,NULL);
-    init_coord (&(all_buttons[B_5]),true,true,NULL);
-    init_coord (&(all_buttons[B_6]),true,true,NULL);
-    init_coord (&(all_buttons[B_7]),true,true,NULL);
-    init_coord (&(all_buttons[B_ON]),false,false,NULL);   
-    init_coord (&(all_buttons[B_OFF]),false,false,NULL);
-    init_coord (&(all_buttons[B_BLINK]),false,false,NULL);
-   
-       
-     
-            
+    init_coord ((void *) &(all_buttons[B_0]),true,true,(void *) NULL);     // declaro los bitmaps y los
+    init_coord ((void *) &(all_buttons[B_1]),true,true,(void *) NULL);     // estados de los leds
+    init_coord ((void *) &(all_buttons[B_2]),true,true,(void *) NULL);
+    init_coord ((void *) &(all_buttons[B_3]),true,true,(void *) NULL);
+    init_coord ((void *) &(all_buttons[B_4]),true,true,(void *) NULL);
+    init_coord ((void *) &(all_buttons[B_5]),true,true,(void *) NULL);
+    init_coord ((void *) &(all_buttons[B_6]),true,true,(void *) NULL);
+    init_coord ((void *) &(all_buttons[B_7]),true,true,(void *) NULL);
+    init_coord ((void *) &(all_buttons[B_ON]),false,false,(void *) NULL);   
+    init_coord ((void *) &(all_buttons[B_OFF]),false,false,(void *) NULL);
+    init_coord ((void *) &(all_buttons[B_BLINK]),false,false,(void *) NULL);
+    
     bool close_display = false;
     bool mouse = false;
     bool keyboard = false;
     bool redraw = false;
 
-    
+
     int mouse_x = 0;
     int mouse_y = 0;
     
@@ -219,8 +214,7 @@ int main(void)
         al_uninstall_audio();
         return -1;
     }
-    led_on_music = al_load_sample( "ison.wav" );
-    if (!led_on_music)
+    if (!(led_on_music = al_load_sample( "ison.wav" )))
     {
         if (al_filename_exists("ison.wav"))
             fprintf(stderr,"Existe\n");
@@ -235,19 +229,18 @@ int main(void)
         return -1;
     }
 
-    back_music = al_load_sample( "back_music.wav" );
-    if (!back_music)
+    if (!(back_music = al_load_sample( "back_music.wav" )))
     {
         fprintf(stderr,"back not loaded");
-        if (al_filename_exists("back.ogg"))
+        if (al_filename_exists("back_music.wav"))
             fprintf(stderr,"Existe\n");
-            al_destroy_bitmap(led_off);
-            al_destroy_bitmap(button_flash);
-            al_destroy_bitmap(button_charge);
-            al_destroy_bitmap(button_discharge);
-            al_destroy_bitmap(background1);
-            al_destroy_bitmap(background2);
-            al_uninstall_audio();
+        al_destroy_bitmap(led_off);
+        al_destroy_bitmap(button_flash);
+        al_destroy_bitmap(button_charge);
+        al_destroy_bitmap(button_discharge);
+        al_destroy_bitmap(background1);
+        al_destroy_bitmap(background2);
+        al_uninstall_audio();
 
         return -1;
     }
@@ -259,11 +252,26 @@ int main(void)
 
     display_background = background1;
     
-    init_screen ((void *) &(all_buttons[B_0]), (void *) display_background,led_on,led_off, 11); // Imprimo en pantalla los bitmaps en sus estados iniciales
+    al_play_sample(back_music,0.75,0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL); 
+    
+    if ( print_instructions ("poke_font.ttf","poke_font.ttf","white") )
+    {
+        fprintf(stderr,"Fonts or event queue couldn't be loaded");
+        al_destroy_bitmap(led_off);
+        al_destroy_bitmap(button_flash);
+        al_destroy_bitmap(button_charge);
+        al_destroy_bitmap(button_discharge);
+        al_destroy_bitmap(background1);
+        al_destroy_bitmap(background2);
+        al_uninstall_audio();
+
+        return -1;
+    }
+    
+    print_display((void *) all_buttons,(void *) display_background,(void *)led_on,(void *)led_off, 11);
+
     al_start_timer(timer);                              // Empiezo el timer
     
-    al_play_sample(back_music,0.75,0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL); 
-
     while (!close_display)
     {
         ALLEGRO_EVENT event;
@@ -290,7 +298,7 @@ int main(void)
                 if (mouse && !keyboard)
                 {
                     mouse = false;
-                    button = button_pressed (mouse_x, mouse_y, &(all_buttons[B_0]), 11); // me fijo que boton aprete
+                    button = button_pressed (mouse_x, mouse_y, (void *) all_buttons, 11); // me fijo que boton aprete
                     redraw = true;
                 }
                 else if (!mouse && keyboard)
@@ -301,14 +309,31 @@ int main(void)
                         case ALLEGRO_KEY_B : button = B_BLINK; break;
                         case ALLEGRO_KEY_C : button = B_OFF; break;
                         case ALLEGRO_KEY_S : button = B_ON ; break;
-                        case ALLEGRO_KEY_F1 : display_background =background1; 
+                        case ALLEGRO_KEY_F1 : display_background = background1; 
 				    redraw = true;
 				    button = B_NOT; 
 				    break;
-                        case ALLEGRO_KEY_F2 :display_background =background2;
+                        case ALLEGRO_KEY_F2 :display_background = background2;
 				    redraw = true;
 				    button = B_NOT; 
 				    break;
+                        case ALLEGRO_KEY_ENTER : 
+                                    if ( print_instructions ("poke_font.ttf","poke_font.ttf","white") )
+                                    {
+                                        fprintf(stderr,"Fonts or event queue couldn't be loaded");
+                                        al_destroy_bitmap(led_off);
+                                        al_destroy_bitmap(button_flash);
+                                        al_destroy_bitmap(button_charge);
+                                        al_destroy_bitmap(button_discharge);
+                                        al_destroy_bitmap(background1);
+                                        al_destroy_bitmap(background2);
+                                        al_uninstall_audio();
+
+                                        return -1;
+                                    }
+                                    redraw = true;
+                                    button = B_NOT;
+                                    break;
                         case ALLEGRO_KEY_PAD_0:
                         case ALLEGRO_KEY_0 : button = B_0; break;
                         case ALLEGRO_KEY_PAD_1:
@@ -326,13 +351,6 @@ int main(void)
                         case ALLEGRO_KEY_PAD_7:
                         case ALLEGRO_KEY_7 : button = B_7 ; break;
                         case ALLEGRO_KEY_ESCAPE : close_display = true;break;
-                        case ALLEGRO_KEY_SPACE : 
-				    if (secret_game() == (-1))
-                        	    {
-                                        fprintf(stderr, "fatal error");
-                            		return -1;
-                        	    }
-                        	    al_set_target_bitmap(al_get_backbuffer(display));
                         default : button = B_NOT; break;
                     }
                     if ( (button != B_NOT) && (close_display != true ) )
@@ -342,55 +360,66 @@ int main(void)
                 }
             }
         }
-
-//        led_on_music = al_load_sample( "ison.wav" );
         
 	if ( redraw && al_event_queue_is_empty(event_line))
         {
             redraw = false;
             switch (button)
             {
-                case B_0 : bit_switch (&(all_buttons[B_0]));     //prendo o apago el led
-                           if ( (&(all_buttons[B_0]))->led_on)
-                           al_play_sample(led_on_music,1.0,0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
+                case B_0 : 
+                           bit_switch (&(all_buttons[B_0]));     //prendo o apago el led
+                           if ( all_buttons[B_0].led_on)
+                                al_play_sample(led_on_music,2.0,0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
 		break;
-                case B_1 : bit_switch (&(all_buttons[B_1]));
-                           if ( (&(all_buttons[B_1]))->led_on)
-                           al_play_sample(led_on_music,1.0,0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
+                case B_1 : 
+                           bit_switch (&(all_buttons[B_1]));
+                           if ( all_buttons[B_1].led_on)
+                                al_play_sample(led_on_music,2.0,0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
                 break;
-                case B_2 : bit_switch (&(all_buttons[B_2]));
-                           if ( (&(all_buttons[B_2]))->led_on)
-                           al_play_sample(led_on_music,1.0,0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
+                case B_2 :
+                           bit_switch (&(all_buttons[B_2]));
+                           if ( all_buttons[B_2].led_on)
+                                al_play_sample(led_on_music,2.0,0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
                 break;
-                case B_3 : bit_switch (&(all_buttons[B_3]));
-                           if ( (&(all_buttons[B_3]))->led_on)
-                           al_play_sample(led_on_music,1.0,0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
+                case B_3 : 
+                           bit_switch (&(all_buttons[B_3]));
+                           if ( all_buttons[B_3].led_on)
+                                al_play_sample(led_on_music,2.0,0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
                 break;
-                case B_4 : bit_switch (&(all_buttons[B_4]));
-                           if ( (&(all_buttons[B_4]))->led_on)
-                           al_play_sample(led_on_music,1.0,0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
+                case B_4 : 
+                           bit_switch (&(all_buttons[B_4]));
+                           if ( all_buttons[B_4].led_on)
+                                al_play_sample(led_on_music,2.0,0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
                 break;
-                case B_5 : bit_switch (&(all_buttons[B_5]));
-                           if ( (&(all_buttons[B_5]))->led_on)
-                           al_play_sample(led_on_music,1.0,0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
+                case B_5 : 
+                           bit_switch (&(all_buttons[B_5]));
+                           if ( all_buttons[B_5].led_on)
+                                al_play_sample(led_on_music,2.0,0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
                 break;
-                case B_6 : bit_switch (&(all_buttons[B_6]));
-                           if ( (&(all_buttons[B_6]))->led_on)
-                           al_play_sample(led_on_music,1.0,0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
+                case B_6 : 
+                           bit_switch (&(all_buttons[B_6]));
+                           if ( all_buttons[B_6].led_on)
+                                al_play_sample(led_on_music,2.0,0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
                 break;
-                case B_7 : bit_switch (&(all_buttons[B_7]));
-                           if ( (&(all_buttons[B_7]))->led_on)
-                           al_play_sample(led_on_music,1.0,0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
+                case B_7 : 
+                           bit_switch (&(all_buttons[B_7]));
+                           if ( all_buttons[B_7].led_on)
+                                al_play_sample(led_on_music,2.0,0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
                 break;
-                case B_ON : set_all(&(all_buttons[B_0]), 8) ;    //prendo todos los leds
+                case B_ON : 
+                            set_all((void *) all_buttons, 8) ;    //prendo todos los leds
+                                al_play_sample(led_on_music,4.0,0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
                 break;
-                case B_OFF : clr_all (&(all_buttons[B_0]),8);    //apago todos los leds
+                case B_OFF : 
+                            clr_all ((void *) all_buttons,8);    //apago todos los leds
                 break;
-                case B_BLINK :blink_all(&(all_buttons[B_0]),(void *) display_background,led_on,led_off,8, 10); // parpadean los leds
+                case B_BLINK :
+                            blink_all((void *) all_buttons,(void *) display_background,led_on,led_off,8, 10); // parpadean los leds
                 break;
-                case B_NOT :break;
+                case B_NOT :
+                break;
             }
-            print_display(&(all_buttons[B_0]),(void *) display_background,led_on,led_off, 11);
+            print_display((void *) all_buttons,(void *) display_background,(void *)led_on,(void *)led_off, 11);
         }
         
     }
