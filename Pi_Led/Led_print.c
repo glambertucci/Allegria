@@ -19,10 +19,10 @@
 #include <string.h>
 
 #include "struct.h"
-static void export(char * pin);
-static void output_set(char * pin);
-static void state_set(char * pin, char led_state);
-static void set_led ( void * pin, char led_state );
+void export(char * pin);
+void output_set(char * pin);
+void state_set(char * pin, char led_state);
+void set_led ( void * pin, char led_state );
 void print_led (char led, char led_state);
 
 int main(void)
@@ -34,18 +34,17 @@ return 0;
 void print_led (char led, char led_state)
 {
     char * real_pin;
-    \
+    
     
     switch (led)
     {
-	case B_0 : real_pin = "" ;break;
-	case B_1 : real_pin = "" ;break;
-	case B_2 : real_pin = "" ;break;
-	case B_3 : real_pin = "" ;break;
-	case B_4 : real_pin = "" ;break;
-	case B_5 : real_pin = "" ;break;
-	case B_6 : real_pin = "" ;break;
-	case B_7 : real_pin = "" ;break;
+	case B_1 : real_pin = "4" ;break;
+	case B_2 : real_pin = "17" ;break;
+	case B_3 : real_pin = "27" ;break;
+	case B_4 : real_pin = "22" ;break;
+	case B_5 : real_pin = "18" ;break;
+	case B_6 : real_pin = "23" ;break;
+	case B_7 : real_pin = "24" ;break;
     }
     
     set_led(real_pin,led_state);
@@ -61,7 +60,7 @@ void set_led ( void * pin, char led_state )
 }
 
 
-static void export(char * pin)
+void export(char * pin)
 {
 	FILE *handle_export;
 	int nWritten;
@@ -83,7 +82,7 @@ static void export(char * pin)
 
 }
 
-static void output_set(char * pin)
+void output_set(char * pin)
 {
     FILE * handle_direction;
     int nWritten;
@@ -117,7 +116,7 @@ static void output_set(char * pin)
 }
 
 
-static void state_set(char * pin, char led_state)
+void state_set(char * pin, char led_state)
 {
     FILE * handle;
 
@@ -126,7 +125,7 @@ static void state_set(char * pin, char led_state)
     char * part3 = "/value";
     char full_address [100];
 	
-    strcpy(full_address, part1 );
+    strcpy(full_address, part1);
     strcat(full_address, pin);
     strcat(full_address, part3);
 
