@@ -19,4 +19,6 @@
 
 
 int op_valid (char input);
+int check_mask (* mask_array, int max_bits);
+
 #endif

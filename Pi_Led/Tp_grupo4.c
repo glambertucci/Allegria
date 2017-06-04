@@ -4,11 +4,21 @@
 #include "validation.h"
 #include "input_output.h"
 #include "struct.h"
-
+#include "Led_print.h"
 
 
 #define PORTA ('a')
 
+#define PORT_LENGTH (7)
+
+#define INITSTATE ('0')
+#define LED_1 ('4')
+#define LED_2 ("17")
+#define LED_3 ("27")
+#define LED_4 ("22")
+#define LED_5 ("18")
+#define LED_6 ("23")
+#define LED_7 ("24")
 
 
 
@@ -29,6 +39,17 @@ int main (void)
 	char * mask_array;
 	char short_array[9] = {"00000000"};
 	int max_bits, i ,mask_error = NOERRORS;
+
+	//Inicialización
+	
+	set_led (LED_1, INITSTATE);		
+	set_led (LED_2, INITSTATE);
+	set_led (LED_3, INITSTATE);
+	set_led (LED_4, INITSTATE);
+	set_led (LED_5, INITSTATE);
+	set_led (LED_6, INITSTATE);
+	set_led (LED_7, INITSTATE);
+
 
 
 
@@ -53,8 +74,8 @@ int main (void)
 		printf("%c para encender todos los led\n", ALLON);
 		printf("la tecla ESC para finalizar el programa\n");
 
-		do
-		{																			//SELECCION DEL USUARIO PARA OPERACION
+		do						//SELECCION DEL USUARIO PARA OPERACION
+		{		
 			option = get_char();
 			
 			option_validation = op_valid(option);
@@ -65,45 +86,32 @@ int main (void)
 			}
 		} while (option_validation == FALSE);
 
-		switch (option)											//SE ASIGNAN LOS PUNTEROS A FUNCION PARA OPERAR CON MASCARAS
+		switch (option)						//SE ASIGNAN LOS PUNTEROS A FUNCION PARA OPERAR CON MASCARAS
 		{
 			case MASKON: funcion = &bitset; break;
 			case MASKOFF: funcion = &bitclr; break;
 			case MASKTOGGLE: funcion = &bittoggle; break;
 		}
-
 		
 		if ( (option >='0') && (option <='7') )	// para modificaciones de bits 
 		{
                     pointer = &(portd.half_reg);
 
                     bittoggle (port , (int) option - '0', pointer); 
-
 		}
 
 		else if ( (option == MASKON)||(option == MASKOFF)||(option == MASKTOGGLE) ) 	// para modificaciones con mascaras
 		{
 				mask_array = short_array;
-				max_bits = 8;
-
+				max_bits = PORT_LENGTH;
 				pointer = &(portd.half_reg);
 
 			printf ("\nIngrese la máscara con la que desee operar\n");
 			do 
 			{
 				get_mask (mask_array , max_bits );
-				for (i=0 ; i < max_bits ; ++i)
-				{
-					if (i == 0)
-					{
-						mask_error = NOERRORS;
-					}
-					if ((*(mask_array + i) != '0') && (*(mask_array + i) != '1'))
-					{
-						mask_error = ERROR_MASK;
+				mask_error = check_mask (mask_array, max_bits);
 
-					}
-				}
 				if (mask_error == ERROR_MASK)
 				{
 					printf("\nHa ingresado de forma incorrecta la máscara, solo puede ingresar ceros y unos\n");
@@ -112,7 +120,7 @@ int main (void)
 
 			mask_8bits (port , mask_array, pointer, funcion ) ;
 
-			for ( i = 0 ; i < max_bits -1 ; ++i)
+			for ( i = 0 ; i < max_bits-1 ; ++i)
 			{
 				*(mask_array + i) = '0';
 			}

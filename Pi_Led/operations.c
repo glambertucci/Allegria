@@ -122,26 +122,3 @@ void mask_8bits (char puerto, char * array, void * pointer2, void (*funcion) (ch
 	}
 }
 
-
-
-/* Esta funcion esta comenteada para su proxima implementacion 
-void port_d_func (b16_t * pointer, int bit, void (*funcion) (char puerto, int bit, b16_t * pointer) )
-{
-	b1_t * port_a = &(pointer->porta.eight_reg);
-	b1_t * port_b = &(pointer->portb.eight_reg);
-
-	int puerto;
-
-	if ( bit >= 8)
-	{
-		puerto = 'a';
-		bit = bit - 8;
-		(*funcion) (puerto, bit, pointer);
-
-	}
-	else
-	{
-		puerto = 'a';
-		(*funcion) (puerto, bit, pointer);
-	}
-}*/

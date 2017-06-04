@@ -71,3 +71,20 @@ int op_valid (char input)
 	}
 	return value; 
 }
+
+int check_mask (mask_array, max_bits)
+{
+	int i, error;
+	for (i=0 ; i < max_bits ; ++i)
+	{
+		if (i == 0)
+		{
+			error = NOERRORS;
+		}
+		if ((*(mask_array + i) != '0') && (*(mask_array + i) != '1'))
+		{
+			error = ERROR_MASK;
+		}
+	}
+	return error;
+}

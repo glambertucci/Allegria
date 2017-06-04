@@ -25,11 +25,6 @@ void state_set(char * pin, char led_state);
 void set_led ( void * pin, char led_state );
 void print_led (char led, char led_state);
 
-int main(void)
-{
-	set_led((void *) "22",'1');
-return 0;
-}
 
 void print_led (char led, char led_state)
 {
@@ -120,7 +115,6 @@ void state_set(char * pin, char led_state)
 {
     FILE * handle;
 
-    
     char * part1 = "/sys/class/gpio/gpio";
     char * part3 = "/value";
     char full_address [100];
@@ -148,7 +142,6 @@ void state_set(char * pin, char led_state)
 	printf("Write to file %s successfully done.\n",full_address);
 
     fclose(handle);
-
 }
 
 
