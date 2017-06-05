@@ -93,7 +93,6 @@ void bittoggle (char puerto, int bit, void * pointer2)
 
 	switch (bit)
 	{
-		case 0 : ( port->b0 ? ( port->b0 = OFF ) : ( port->b0 = ON ) ) ; break;
 		case 1 : ( port->b1 ? ( port->b1 = OFF ) : ( port->b1 = ON ) ) ; break;
 		case 2 : ( port->b2 ? ( port->b2 = OFF ) : ( port->b2 = ON ) ) ; break;
 		case 3 : ( port->b3 ? ( port->b3 = OFF ) : ( port->b3 = ON ) ) ; break;

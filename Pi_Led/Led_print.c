@@ -29,8 +29,6 @@ void print_led (char led, char led_state);
 void print_led (char led, char led_state)
 {
     char * real_pin;
-    
-    
     switch (led)
     {
 	case B_1 : real_pin = "4" ;break;

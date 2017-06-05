@@ -30,6 +30,7 @@ int main (void)
 {
 	char option = 'p', port = PORTA;
 	int option_validation = TRUE, status,move_screen;	
+	void * pointer; 	
 
 	void (*funcion) (char puerto , int bit , void * pointer2); 
 	port_16_t portd;
@@ -69,7 +70,6 @@ int main (void)
 		do						//SELECCION DEL USUARIO PARA OPERACION
 		{		
 			option = get_char();
-			
 			option_validation = op_valid(option);
 
 			if (option_validation == FALSE)
