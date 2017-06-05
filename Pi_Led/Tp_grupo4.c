@@ -31,8 +31,7 @@ int main (void)
 	char option = 'p', port = PORTA;
 	int option_validation = TRUE, status,move_screen;	
 
-	void (*funcion) (char puerto , int bit , void * pointer2);
-	void * pointer; 
+	void (*funcion) (char puerto , int bit , void * pointer2); 
 	port_16_t portd;
 	portd.full_reg= 0;
 	
@@ -51,18 +50,11 @@ int main (void)
 	set_led (LED_7, INITSTATE);
 
 
-
-
 	while ( ( option != ENDOFPROGAM ) && ( port != ENDOFPROGAM ))
 	{
             
             for (move_screen = 30; move_screen >=0 ; --move_screen)
                 putchar('\n');
-            
-                pointer = &(portd.half_reg.porta.eight_reg);
-		printf("\nEstado actual puerto A: ");
-		print_status(pointer , PORTA);
-		printf("\n");
                 
 		printf("\nPor favor ingrese la operación que desee realizar:\n");
 		printf("los numeros del 0 al 7 para prender o apagar los leds\n");	
@@ -96,7 +88,6 @@ int main (void)
 		if ( (option >='0') && (option <='7') )	// para modificaciones de bits 
 		{
                     pointer = &(portd.half_reg);
-
                     bittoggle (port , (int) option - '0', pointer); 
 		}
 
@@ -126,7 +117,6 @@ int main (void)
 			}
 
 			*(mask_array + i) = 0;
-
 		}
 
 		else if (option == ALLON)
@@ -145,13 +135,5 @@ int main (void)
                 
 
 	}	
-	
-	
-	pointer = &(portd.half_reg.porta.eight_reg);
-	printf("\nEstado final puerto A: ");
-	print_status(pointer , PORTA);
-	printf("\n");
-		
-
 	return 0;
 }
