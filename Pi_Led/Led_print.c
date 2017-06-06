@@ -19,41 +19,20 @@
 #include <string.h>
 
 #include "struct.h"
-void export(char * pin);
-void output_set(char * pin);
-void state_set(char * pin, char led_state);
-void set_led ( void * pin, char led_state );
-void print_led (char led, char led_state);
 
-
-void print_led (char led, char led_state)
-{
-    char * real_pin;
-    switch (led)
-    {
-	case B_1 : real_pin = "4" ;break;
-	case B_2 : real_pin = "17" ;break;
-	case B_3 : real_pin = "27" ;break;
-	case B_4 : real_pin = "22" ;break;
-	case B_5 : real_pin = "18" ;break;
-	case B_6 : real_pin = "23" ;break;
-	case B_7 : real_pin = "24" ;break;
-    }
-    
-    set_led(real_pin,led_state);
-}
+static void export(char * pin);
+static void output_set(char * pin);
 
 
 
-void set_led ( void * pin, char led_state )
+void set_led ( char * pin, char led_state )
 {
     export( (char *)pin);
     output_set((char *)pin);
     state_set((char *)pin,led_state);
 }
 
-
-void export(char * pin)
+static void export(char * pin)
 {
 	FILE *handle_export;
 	int nWritten;
@@ -75,7 +54,7 @@ void export(char * pin)
 
 }
 
-void output_set(char * pin)
+static void output_set(char * pin)
 {
     FILE * handle_direction;
     int nWritten;

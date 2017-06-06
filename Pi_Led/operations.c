@@ -1,4 +1,5 @@
 #include "operations.h"
+#include "Led_print.h"
 
 #define INVERT(a) (7-a)		// Permite invertir el contador para poder ver la posicion del
 #define ON (1)
@@ -18,13 +19,13 @@ void bitset (char puerto, int bit, void * pointer2)
 	switch (bit)
 	{
 		case 0 : port->b0 = ON; break;						//bit 0
-		case 1 : port->b1 = ON; break;
-		case 2 : port->b2 = ON; break;
-		case 3 : port->b3 = ON; break;
-		case 4 : port->b4 = ON; break;
-		case 5 : port->b5 = ON; break;
-		case 6 : port->b6 = ON; break;
-		case 7 : port->b7 = ON; break;						//bit 7
+		case 1 : port->b1 = ON; set_led (LED_1, ON); break;
+		case 2 : port->b2 = ON; set_led (LED_2, ON); break;
+		case 3 : port->b3 = ON; set_led (LED_3, ON); break;
+		case 4 : port->b4 = ON; set_led (LED_4, ON); break;
+		case 5 : port->b5 = ON; set_led (LED_5, ON); break;
+		case 6 : port->b6 = ON; set_led (LED_6, ON); break;
+		case 7 : port->b7 = ON; set_led (LED_7, ON); break;			//bit 7
 	}
 }
 
@@ -42,13 +43,13 @@ void bitclr (char puerto, int bit, void * pointer2)
 	switch (bit)
 	{
 		case 0 : port->b0 = OFF; break;						//bit 0
-		case 1 : port->b1 = OFF; break;
-		case 2 : port->b2 = OFF; break;
-		case 3 : port->b3 = OFF; break;
-		case 4 : port->b4 = OFF; break;
-		case 5 : port->b5 = OFF; break;
-		case 6 : port->b6 = OFF; break;
-		case 7 : port->b7 = OFF; break;						//bit 7
+		case 1 : port->b1 = OFF; set_led (LED_1, OFF); break;
+		case 2 : port->b2 = OFF; set_led (LED_2, OFF); break;
+		case 3 : port->b3 = OFF; set_led (LED_3, OFF); break;
+		case 4 : port->b4 = OFF; set_led (LED_4, OFF); break;
+		case 5 : port->b5 = OFF; set_led (LED_5, OFF); break;
+		case 6 : port->b6 = OFF; set_led (LED_6, OFF); break;
+		case 7 : port->b7 = OFF; set_led (LED_7, OFF); break;						//bit 7
 	}
 }
 
@@ -79,7 +80,6 @@ int bitget (char puerto, int bit, void * pointer2)
 	return result;
 }
 
-
 void bittoggle (char puerto, int bit, void * pointer2)
 {
 	b1_t * port;
@@ -93,13 +93,83 @@ void bittoggle (char puerto, int bit, void * pointer2)
 
 	switch (bit)
 	{
-		case 1 : ( port->b1 ? ( port->b1 = OFF ) : ( port->b1 = ON ) ) ; break;
-		case 2 : ( port->b2 ? ( port->b2 = OFF ) : ( port->b2 = ON ) ) ; break;
-		case 3 : ( port->b3 ? ( port->b3 = OFF ) : ( port->b3 = ON ) ) ; break;
-		case 4 : ( port->b4 ? ( port->b4 = OFF ) : ( port->b4 = ON ) ) ; break;
-		case 5 : ( port->b5 ? ( port->b5 = OFF ) : ( port->b5 = ON ) ) ; break;
-		case 6 : ( port->b6 ? ( port->b6 = OFF ) : ( port->b6 = ON ) ) ; break;
-		case 7 : ( port->b7 ? ( port->b7 = OFF ) : ( port->b7 = ON ) ) ; break;
+		case 1: if (port->b1) 
+			{				
+				port->b1 = OFF;
+				set_led (LED_1, OFF);
+			} 
+			else
+			{
+				port->b1 = ON;
+				set_led (LED_1, ON); 
+			}			
+			break;
+		case 2: if (port->b2) 
+			{
+				port->b2 = OFF;
+				set_led (LED_2, OFF);
+			}
+			else
+			{
+				port->b2 = ON;
+				set_led (LED_2, ON);
+			}
+			break;
+		case 3: if (port->b3)
+			{
+				port->b3 = OFF;
+				set_led (LED_3, OFF);
+			}
+			else
+			{
+				port->b3 = ON;
+				set_led (LED_3, ON);
+			}
+			break;
+		case 4: if (port->b4)
+			{
+				port->b4 = OFF;
+				set_led (LED_4, OFF);
+			}
+			else
+			{
+				port->b4 = ON;
+				set_led (LED_4, ON);
+			}
+			break;
+		case 5: if (port->b5)
+			{
+				port->b5 = OFF;
+				set_led (LED_5, OFF);
+			}
+			else
+			{
+				port->b5 = ON;
+				set_led (LED_5, ON);
+			}
+			break;
+		case 6: if (port->b6)
+			{
+				port->b6 = OFF;
+				set_led (LED_6, OFF);
+			}
+			else
+			{
+				port->b6 = ON;
+				set_led (LED_6, ON);
+			}
+			break;
+		case 7: if (port->b7)
+			{
+				port->b7 = OFF;
+				set_led (LED_7, OFF);
+			}
+			else 
+			{
+				port->b7 = ON;
+				set_led (LED_7, ON);
+			}
+			break;
 	}
 }
 
@@ -110,7 +180,6 @@ void mask_8bits (char puerto, char * array, void * pointer2, void (*funcion) (ch
 
 	void * pointer;
 	b16_t * aa = pointer2;
-
 
 	for (counter = 0 ;  ( *(array + counter) != 0 ) || (counter < 8) ; ++counter)		
 	{

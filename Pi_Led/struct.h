@@ -52,4 +52,12 @@ typedef union				// Union de las formas de mostrar un registro de 16 bits
 #define ALLON ('s')
 #define ENDOFPROGAM 27
 
+
+#define LED_1 ("4")
+#define LED_2 ("17")
+#define LED_3 ("27")
+#define LED_4 ("22")
+#define LED_5 ("18")
+#define LED_6 ("23")
+#define LED_7 ("24")
 #endif

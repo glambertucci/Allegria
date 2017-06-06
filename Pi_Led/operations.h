@@ -7,6 +7,7 @@
 
 
 
+
 // funcion bitset : Esta funcion prende un bit de un registro
 //
 // - char puerto 	 : Indica que registro se debe modificar ('a' o 'b')

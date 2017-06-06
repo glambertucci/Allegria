@@ -10,20 +10,7 @@
 #define PORTA ('a')
 
 #define PORT_LENGTH (7)
-
-#define INITSTATE ('0')
-#define LED_1 ('4')
-#define LED_2 ("17")
-#define LED_3 ("27")
-#define LED_4 ("22")
-#define LED_5 ("18")
-#define LED_6 ("23")
-#define LED_7 ("24")
-
-
-
-#define NOERRORS (0)
-#define ERROR_MASK (1)
+#define INITSTATE ('1')
 
 
 int main (void)
@@ -34,7 +21,7 @@ int main (void)
 
 	void (*funcion) (char puerto , int bit , void * pointer2); 
 	port_16_t portd;
-	portd.full_reg= 0;
+	portd.full_reg= INITSTATE - 0;
 	
 	char * mask_array;
 	char short_array[9] = {"00000000"};
@@ -50,12 +37,15 @@ int main (void)
 	set_led (LED_6, INITSTATE);
 	set_led (LED_7, INITSTATE);
 
+pointer = &(portd.half_reg.porta.eight_reg);
+	printf("\nEstado inicial puerto A: ");
+	print_status(pointer , PORTA);
 
 	while ( ( option != ENDOFPROGAM ) && ( port != ENDOFPROGAM ))
 	{
             
-            for (move_screen = 30; move_screen >=0 ; --move_screen)
-                putchar('\n');
+ //           for (move_screen = 30; move_screen >=0 ; --move_screen)
+  //              putchar('\n');
                 
 		printf("\nPor favor ingrese la operación que desee realizar:\n");
 		printf("los numeros del 0 al 7 para prender o apagar los leds\n");	
@@ -131,9 +121,10 @@ int main (void)
 		{
 
 			toggle_print (&(portd.half_reg.porta), 6);
-		}
-                
-
+		}             
 	}	
+pointer = &(portd.half_reg.porta.eight_reg);
+	printf("\nEstado inicial puerto A: ");
+	print_status(pointer , PORTA);
 	return 0;
 }

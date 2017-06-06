@@ -6,6 +6,9 @@
 #define TRUE (1)
 #define FALSE (0)
 
+#define NOERRORS (0)
+#define ERROR_MASK (1)
+
 // valid_string    		: Esta funion valida un string para que solo sea una mascara, de ser invalido
 //					 devolvera un 0.
 // - char * string 		: Es un string de char que debe ser la mascara que se quiere aplicar
@@ -19,6 +22,6 @@
 
 
 int op_valid (char input);
-int check_mask (* mask_array, int max_bits);
+int check_mask (char * mask_array, int max_bits);
 
 #endif
