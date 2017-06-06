@@ -6,8 +6,6 @@
 #define TRUE (1)
 #define FALSE (0)
 
-#define NOERRORS (0)
-#define ERROR_MASK (1)
 
 // valid_string    		: Esta funion valida un string para que solo sea una mascara, de ser invalido
 //					 devolvera un 0.

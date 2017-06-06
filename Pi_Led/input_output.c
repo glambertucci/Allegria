@@ -122,8 +122,6 @@ void toggle_print (void * pointer2, int repeat)
 		printf("\nEstado actual puerto A: ");
 		print_status( point , PORTA1 );
 
-		
-
 		sleep(1);
 
 		mask_8bits (PORTA1, array, pointer, funcion);

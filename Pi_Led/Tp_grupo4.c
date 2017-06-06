@@ -9,8 +9,8 @@
 
 #define PORTA ('a')
 
-#define PORT_LENGTH (7)
-#define INITSTATE ('1')
+#define PORT_LENGTH (8)
+#define INITSTATE ('0')
 
 
 int main (void)
@@ -37,16 +37,10 @@ int main (void)
 	set_led (LED_6, INITSTATE);
 	set_led (LED_7, INITSTATE);
 
-pointer = &(portd.half_reg.porta.eight_reg);
-	printf("\nEstado inicial puerto A: ");
-	print_status(pointer , PORTA);
 
 	while ( ( option != ENDOFPROGAM ) && ( port != ENDOFPROGAM ))
 	{
-            
- //           for (move_screen = 30; move_screen >=0 ; --move_screen)
-  //              putchar('\n');
-                
+                      
 		printf("\nPor favor ingrese la operación que desee realizar:\n");
 		printf("los numeros del 0 al 7 para prender o apagar los leds\n");	
 		printf("%c para ingresar una máscara para el encendido de leds\n", MASKON);
@@ -93,11 +87,11 @@ pointer = &(portd.half_reg.porta.eight_reg);
 				get_mask (mask_array , max_bits );
 				mask_error = check_mask (mask_array, max_bits);
 
-				if (mask_error == ERROR_MASK)
+				if (!mask_error)
 				{
 					printf("\nHa ingresado de forma incorrecta la máscara, solo puede ingresar ceros y unos\n");
 				}
-			} while (mask_error == ERROR_MASK);	
+			} while (!mask_error);	
 
 			mask_8bits (port , mask_array, pointer, funcion ) ;
 
@@ -119,12 +113,10 @@ pointer = &(portd.half_reg.porta.eight_reg);
 		}
 		else if (option == INTERMITENCE)
 		{
-
 			toggle_print (&(portd.half_reg.porta), 6);
-		}             
+		}
+		putchar('\n');
+		putchar('\n');
 	}	
-pointer = &(portd.half_reg.porta.eight_reg);
-	printf("\nEstado inicial puerto A: ");
-	print_status(pointer , PORTA);
 	return 0;
 }

@@ -4,7 +4,8 @@
 #define INVERT(a) (7-a)		// Permite invertir el contador para poder ver la posicion del
 #define ON (1)
 #define OFF (0)
-
+#define LED_ON ('1')
+#define LED_OFF ('0')
 
 void bitset (char puerto, int bit, void * pointer2)
 {
@@ -19,13 +20,13 @@ void bitset (char puerto, int bit, void * pointer2)
 	switch (bit)
 	{
 		case 0 : port->b0 = ON; break;						//bit 0
-		case 1 : port->b1 = ON; set_led (LED_1, ON); break;
-		case 2 : port->b2 = ON; set_led (LED_2, ON); break;
-		case 3 : port->b3 = ON; set_led (LED_3, ON); break;
-		case 4 : port->b4 = ON; set_led (LED_4, ON); break;
-		case 5 : port->b5 = ON; set_led (LED_5, ON); break;
-		case 6 : port->b6 = ON; set_led (LED_6, ON); break;
-		case 7 : port->b7 = ON; set_led (LED_7, ON); break;			//bit 7
+		case 1 : port->b1 = ON; state_set (LED_1, LED_ON); break;
+		case 2 : port->b2 = ON; state_set (LED_2, LED_ON); break;
+		case 3 : port->b3 = ON; state_set (LED_3, LED_ON); break;
+		case 4 : port->b4 = ON; state_set (LED_4, LED_ON); break;
+		case 5 : port->b5 = ON; state_set (LED_5, LED_ON); break;
+		case 6 : port->b6 = ON; state_set (LED_6, LED_ON); break;
+		case 7 : port->b7 = ON; state_set (LED_7, LED_ON); break;			//bit 7
 	}
 }
 
@@ -43,13 +44,13 @@ void bitclr (char puerto, int bit, void * pointer2)
 	switch (bit)
 	{
 		case 0 : port->b0 = OFF; break;						//bit 0
-		case 1 : port->b1 = OFF; set_led (LED_1, OFF); break;
-		case 2 : port->b2 = OFF; set_led (LED_2, OFF); break;
-		case 3 : port->b3 = OFF; set_led (LED_3, OFF); break;
-		case 4 : port->b4 = OFF; set_led (LED_4, OFF); break;
-		case 5 : port->b5 = OFF; set_led (LED_5, OFF); break;
-		case 6 : port->b6 = OFF; set_led (LED_6, OFF); break;
-		case 7 : port->b7 = OFF; set_led (LED_7, OFF); break;						//bit 7
+		case 1 : port->b1 = OFF; state_set (LED_1, LED_OFF); break;
+		case 2 : port->b2 = OFF; state_set (LED_2, LED_OFF); break;
+		case 3 : port->b3 = OFF; state_set (LED_3, LED_OFF); break;
+		case 4 : port->b4 = OFF; state_set (LED_4, LED_OFF); break;
+		case 5 : port->b5 = OFF; state_set (LED_5, LED_OFF); break;
+		case 6 : port->b6 = OFF; state_set (LED_6, LED_OFF); break;
+		case 7 : port->b7 = OFF; state_set (LED_7, LED_OFF); break;						//bit 7
 	}
 }
 
@@ -96,78 +97,78 @@ void bittoggle (char puerto, int bit, void * pointer2)
 		case 1: if (port->b1) 
 			{				
 				port->b1 = OFF;
-				set_led (LED_1, OFF);
+				state_set (LED_1, LED_OFF);
 			} 
 			else
 			{
 				port->b1 = ON;
-				set_led (LED_1, ON); 
+				state_set (LED_1, LED_ON); 
 			}			
 			break;
 		case 2: if (port->b2) 
 			{
 				port->b2 = OFF;
-				set_led (LED_2, OFF);
+				state_set (LED_2, LED_OFF);
 			}
 			else
 			{
 				port->b2 = ON;
-				set_led (LED_2, ON);
+				state_set (LED_2, LED_ON);
 			}
 			break;
 		case 3: if (port->b3)
 			{
 				port->b3 = OFF;
-				set_led (LED_3, OFF);
+				state_set (LED_3, LED_OFF);
 			}
 			else
 			{
 				port->b3 = ON;
-				set_led (LED_3, ON);
+				state_set (LED_3, LED_ON);
 			}
 			break;
 		case 4: if (port->b4)
 			{
 				port->b4 = OFF;
-				set_led (LED_4, OFF);
+				state_set (LED_4, LED_OFF);
 			}
 			else
 			{
 				port->b4 = ON;
-				set_led (LED_4, ON);
+				state_set (LED_4, LED_ON);
 			}
 			break;
 		case 5: if (port->b5)
 			{
 				port->b5 = OFF;
-				set_led (LED_5, OFF);
+				state_set (LED_5, LED_OFF);
 			}
 			else
 			{
 				port->b5 = ON;
-				set_led (LED_5, ON);
+				state_set (LED_5, LED_ON);
 			}
 			break;
 		case 6: if (port->b6)
 			{
 				port->b6 = OFF;
-				set_led (LED_6, OFF);
+				state_set (LED_6, LED_OFF);
 			}
 			else
 			{
 				port->b6 = ON;
-				set_led (LED_6, ON);
+				state_set (LED_6, LED_ON);
 			}
 			break;
 		case 7: if (port->b7)
 			{
 				port->b7 = OFF;
-				set_led (LED_7, OFF);
+				state_set (LED_7, LED_OFF);
 			}
 			else 
 			{
 				port->b7 = ON;
-				set_led (LED_7, ON);
+				state_set (LED_7, LED_ON);
 			}
 			break;
 	}
@@ -179,7 +180,6 @@ void mask_8bits (char puerto, char * array, void * pointer2, void (*funcion) (ch
 	int counter;
 
 	void * pointer;
-	b16_t * aa = pointer2;
 
 	for (counter = 0 ;  ( *(array + counter) != 0 ) || (counter < 8) ; ++counter)		
 	{

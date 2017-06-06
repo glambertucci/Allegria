@@ -30,17 +30,17 @@ int op_valid (char input)
 
 int check_mask (char * mask_array, int max_bits)
 {
-	int i, error;
+	int i, mask;
 	for (i=0 ; i < max_bits ; ++i)
 	{
 		if (i == 0)
 		{
-			error = NOERRORS;
+			mask = TRUE;
 		}
 		if ((*(mask_array + i) != '0') && (*(mask_array + i) != '1'))
 		{
-			error = ERROR_MASK;
+			error = FALSE;
 		}
 	}
-	return error;
+	return mask;
 }
