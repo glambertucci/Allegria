@@ -20,6 +20,7 @@ int op_valid (char input)
             case 'n': 
             case 'f': 
             case 't':
+	    case 'g':
             case 27 : 
                 value = TRUE; 
                 break;
@@ -39,8 +40,22 @@ int check_mask (char * mask_array, int max_bits)
 		}
 		if ((*(mask_array + i) != '0') && (*(mask_array + i) != '1'))
 		{
-			error = FALSE;
+			mask = FALSE;
 		}
 	}
 	return mask;
+}
+
+int bit_validation(char bit)
+{
+	int in_put = TRUE;
+	if ( (bit >= '0') && (bit <= '6') )
+	{
+		in_put = TRUE;
+	}
+	else
+	{
+		in_put = FALSE;
+	}
+	return in_put;
 }

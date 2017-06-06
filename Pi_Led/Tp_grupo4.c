@@ -6,7 +6,9 @@
 #include "struct.h"
 #include "Led_print.h"
 
+
 #define PORTA ('a')
+#define NOERRORS (1)
 
 #define PORT_LENGTH (8)
 #define INITSTATE ('0')
@@ -14,7 +16,7 @@
 
 int main (void)
 {
-	char option = 'p', port = PORTA;
+	char option = 'p', port = PORTA, bit;
 	int option_validation = TRUE, status,move_screen;	
 	void * pointer; 	
 
@@ -24,7 +26,7 @@ int main (void)
 	
 	char * mask_array;
 	char short_array[9] = {"00000000"};
-	int max_bits, i ,mask_error = NOERRORS;
+	int max_bits, i ,mask_error = NOERRORS, errorbit = NOERRORS;
 
 	//Inicialización
 	
@@ -48,6 +50,7 @@ int main (void)
 		printf("%c para que los led parpadeen\n", INTERMITENCE);
 		printf("%c para apagar todos los led\n", ALLOFF);
 		printf("%c para encender todos los led\n", ALLON);
+		printf("%c para saber el estado de un led\n", BITGET);
 		printf("la tecla ESC para finalizar el programa\n");
 
 		do						//SELECCION DEL USUARIO PARA OPERACION
@@ -55,7 +58,7 @@ int main (void)
 			option = get_char();
 			option_validation = op_valid(option);
 
-			if (option_validation == FALSE)
+			if (!option_validation)
 			{
 				printf("\nHa ingresado una opción incorrecta, reingrese por favor: \n");
 			}
@@ -71,7 +74,7 @@ int main (void)
 		if ( (option >='0') && (option <='7') )	// para modificaciones de bits 
 		{
                     pointer = &(portd.half_reg);
-                    bittoggle (port , (int) option - '0', pointer); 
+                    bittoggle (port , (int) (option - '0') , pointer); 
 		}
 
 		else if ( (option == MASKON)||(option == MASKOFF)||(option == MASKTOGGLE) ) 	// para modificaciones con mascaras
@@ -105,11 +108,36 @@ int main (void)
 		else if (option == ALLON)
 		{
 			portd.full_reg= 0xffff;
+			all_leds(TRUE);
 		}
 		else if (option == ALLOFF)
 		{
 			portd.full_reg= 0;
+			all_leds(FALSE);
 		}
+/*		else if (option == BITGET)
+		{	
+			printf("\nElija el led sobre el cual desea obtener el estado\n");
+			do
+			{
+				bit = get_char();
+				errorbit = bit_validation(bit);
+				if (errorbit == FALSE)
+				{
+					printf("\nHa ingresado un caracter inválido\n");
+				}					
+			}while (errorbit == FALSE);
+			pointer = &(portd.half_reg);			
+			status = bitget (port, (int)(bit - '0'), pointer);
+			if (status == 1)
+			{			
+				printf ("\nEl led está encendido\n");
+			}
+			else
+			{
+				printf ("\nEl led está apagado\n");	
+			}
+		}*/      //todavia no funciona bien
 		else if (option == INTERMITENCE)
 		{
 			toggle_print (&(portd.half_reg.porta), 6);

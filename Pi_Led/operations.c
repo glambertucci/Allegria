@@ -4,8 +4,8 @@
 #define INVERT(a) (7-a)		// Permite invertir el contador para poder ver la posicion del
 #define ON (1)
 #define OFF (0)
-#define LED_ON ('1')
-#define LED_OFF ('0')
+#define LED_ON ('1')		//Para Raspberry pi
+#define LED_OFF ('0')		//Para Raspberry pi
 
 void bitset (char puerto, int bit, void * pointer2)
 {
@@ -19,13 +19,13 @@ void bitset (char puerto, int bit, void * pointer2)
 	}
 	switch (bit)
 	{
-		case 1 : port->b0 = ON; state_set (LED_1, LED_ON); break;	//bit 0
-		case 2 : port->b1 = ON; state_set (LED_2, LED_ON); break;
-		case 3 : port->b2 = ON; state_set (LED_3, LED_ON); break;
-		case 4 : port->b3 = ON; state_set (LED_4, LED_ON); break;
-		case 5 : port->b4 = ON; state_set (LED_5, LED_ON); break;
-		case 6 : port->b5 = ON; state_set (LED_6, LED_ON); break;
-		case 7 : port->b6 = ON; state_set (LED_7, LED_ON); break;			
+		case 0 : port->b0 = ON; state_set (LED_1, LED_ON); break;	//bit 0
+		case 1 : port->b1 = ON; state_set (LED_2, LED_ON); break;
+		case 2 : port->b2 = ON; state_set (LED_3, LED_ON); break;
+		case 3 : port->b3 = ON; state_set (LED_4, LED_ON); break;
+		case 4 : port->b4 = ON; state_set (LED_5, LED_ON); break;
+		case 5 : port->b5 = ON; state_set (LED_6, LED_ON); break;
+		case 6 : port->b6 = ON; state_set (LED_7, LED_ON); break;			
 		case 7 : port->b7 = ON; break;					//bit 7
 	}
 }
@@ -190,3 +190,26 @@ void mask_8bits (char puerto, char * array, void * pointer2, void (*funcion) (ch
 	}
 }
 
+void all_leds (int on)
+{	
+	if (on)
+	{
+		state_set (LED_1, LED_ON);
+		state_set (LED_2, LED_ON);		
+		state_set (LED_3, LED_ON);
+		state_set (LED_4, LED_ON);
+		state_set (LED_5, LED_ON);
+		state_set (LED_6, LED_ON);
+		state_set (LED_7, LED_ON);
+	}
+	else 
+	{	
+		state_set (LED_1, LED_OFF);
+		state_set (LED_2, LED_OFF);		
+		state_set (LED_3, LED_OFF);
+		state_set (LED_4, LED_OFF);
+		state_set (LED_5, LED_OFF);
+		state_set (LED_6, LED_OFF);
+		state_set (LED_7, LED_OFF);
+	}
+}

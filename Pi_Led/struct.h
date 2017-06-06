@@ -50,6 +50,7 @@ typedef union				// Union de las formas de mostrar un registro de 16 bits
 #define INTERMITENCE ('b')
 #define ALLOFF ('c')
 #define ALLON ('s')
+#define BITGET ('g')
 #define ENDOFPROGAM 27
 
 

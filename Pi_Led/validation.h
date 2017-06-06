@@ -8,5 +8,6 @@
 
 int op_valid (char input);
 int check_mask (char * mask_array, int max_bits);
+int bit_validation (char bit);
 
 #endif

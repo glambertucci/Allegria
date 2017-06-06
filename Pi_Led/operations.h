@@ -44,7 +44,8 @@ int bitget (char puerto, int bit, void * pointer2);
 // void (*funcion) (char puerto, int bit, void * pointer2)) : Es un puntero a funcion (bitset, bitclr o bittoggle)
 void mask_8bits (char puerto, char * array, void * pointer, void (*funcion) (char puerto, int bit, void * pointer2));
 
+//función all_on solo para raspberry pi
 
-
+void all_leds (int on);
 
 #endif
