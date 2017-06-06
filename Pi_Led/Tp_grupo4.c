@@ -6,7 +6,6 @@
 #include "struct.h"
 #include "Led_print.h"
 
-
 #define PORTA ('a')
 
 #define PORT_LENGTH (8)
