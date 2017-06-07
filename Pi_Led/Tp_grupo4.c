@@ -16,8 +16,8 @@
 
 int main (void)
 {
-	char option = 'p', port = PORTA;
-	int option_validation = TRUE;	
+	char option = 'p', port = PORTA, bit;
+	int option_validation = TRUE, status,move_screen, counter_int;	
 	void * pointer; 	
 
 	void (*funcion) (char puerto , int bit , void * pointer2); 
@@ -27,7 +27,7 @@ int main (void)
 	char * mask_array;
 	char short_array[9] = {"00000000"};
         char all_one[8] = "1111111";
-	int max_bits, i ,mask_error = NOERRORS;
+	int max_bits, i ,mask_error = NOERRORS, errorbit = NOERRORS;
 
 	//Inicialización
 	
@@ -45,6 +45,7 @@ int main (void)
 		printf("%c para que los led parpadeen\n", INTERMITENCE);
 		printf("%c para apagar todos los led\n", ALLOFF);
 		printf("%c para encender todos los led\n", ALLON);
+		printf("%c para saber el estado de un led\n", BITGET);
 		printf("la tecla ESC para finalizar el programa\n");
 
 		do						//SELECCION DEL USUARIO PARA OPERACION
@@ -114,7 +115,14 @@ int main (void)
 
 		else if (option == INTERMITENCE)
 		{
-			toggle_print (&(portd.half_reg.porta), 6);
+			for ( counter_int = 0; counter < 10 ; ++counter)
+			{
+				funcion = bittoggle;
+				mask_bits(PORTA,all_one,&(portd.half_reg), funcion);
+                   		print_all_leds(&(portd.half_reg.porta.eight_reg));
+				sleep(1);
+			}
+			//toggle_print (&(portd.half_reg.porta), 6);
 		}
 		putchar('\n');
 		putchar('\n');
