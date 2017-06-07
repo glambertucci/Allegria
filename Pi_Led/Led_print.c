@@ -23,7 +23,18 @@
 static void export(char * pin);
 static void output_set(char * pin);
 
-
+void print_all_leds (void * pointer)
+{	
+    b1_t * pin = pointer;
+    
+    state_set (LED_1, pin->b0 + '0');
+    state_set (LED_2, pin->b1 + '0');		
+    state_set (LED_3, pin->b2 + '0');
+    state_set (LED_4, pin->b3 + '0');
+    state_set (LED_5, pin->b4 + '0');
+    state_set (LED_6, pin->b5 + '0');
+    state_set (LED_7, pin->b6 + '0');
+}
 
 void set_led ( char * pin, char led_state )
 {

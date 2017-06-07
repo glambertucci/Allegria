@@ -46,6 +46,6 @@ void mask_bits (char puerto, char * array, void * pointer, void (*funcion) (char
 
 //función all_on solo para raspberry pi
 
-void all_leds (int on);
+
 
 #endif

@@ -120,26 +120,4 @@ void mask_bits (char puerto, char * array, void * pointer2, void (*funcion) (cha
 	}
 }
 
-void all_leds (int on)
-{	
-	if (on)
-	{
-		state_set (LED_1, LED_ON);
-		state_set (LED_2, LED_ON);		
-		state_set (LED_3, LED_ON);
-		state_set (LED_4, LED_ON);
-		state_set (LED_5, LED_ON);
-		state_set (LED_6, LED_ON);
-		state_set (LED_7, LED_ON);
-	}
-	else 
-	{	
-		state_set (LED_1, LED_OFF);
-		state_set (LED_2, LED_OFF);		
-		state_set (LED_3, LED_OFF);
-		state_set (LED_4, LED_OFF);
-		state_set (LED_5, LED_OFF);
-		state_set (LED_6, LED_OFF);
-		state_set (LED_7, LED_OFF);
-	}
-}
+

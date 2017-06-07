@@ -31,13 +31,7 @@ int main (void)
 
 	//Inicialización
 	
-	set_led (LED_1, INITSTATE);		
-	set_led (LED_2, INITSTATE);
-	set_led (LED_3, INITSTATE);
-	set_led (LED_4, INITSTATE);
-	set_led (LED_5, INITSTATE);
-	set_led (LED_6, INITSTATE);
-	set_led (LED_7, INITSTATE);
+	print_all_leds(&(portd.half_reg.porta.eight_reg));
 
 
 	while ( ( option != ENDOFPROGAM ) && ( port != ENDOFPROGAM ))
@@ -110,11 +104,12 @@ int main (void)
 		{
                     switch (option)
                     {
-                        case ALLOFF : funcion = bitclr;all_leds(ON); break;
-                        case ALLON : funcion = bitset;all_leds(OFF); break;
+                        case ALLOFF : funcion = bitclr; break;
+                        case ALLON : funcion = bitset; break;
                     }
                     
                     mask_bits(PORTA,all_one,&(portd.half_reg), funcion);
+                    print_all_leds(&(portd.half_reg.porta.eight_reg));
 
 		}
 
