@@ -57,7 +57,6 @@ void get_mask (char * string_return, int max_bits)
 			*(string_return + counter_return) = '1';
 		}
 	}
-
 }
 
 static int LetterCounter ( char * point, char terminador_a, char terminador_b)								
@@ -98,11 +97,10 @@ void toggle_print (void * pointer2, int repeat)
 {
 	int counter_enter, counter_repeat;
 	port_8_t * pointer = pointer2;
-	b1_t * point;
 	char array[9] = "11111111";
-	void (*funcion) (char puerto, int bit, void * pointer2);
+//	void (*funcion) (char puerto, int bit, void * pointer2);
 
-	funcion = bittoggle;
+//	funcion = bittoggle;
 
 	if (repeat % 2 != 0)
 	{
@@ -117,18 +115,13 @@ void toggle_print (void * pointer2, int repeat)
 			putchar('\n');
 		}
 
-		point = &(pointer->eight_reg);
-
-		printf("\nEstado actual puerto A: ");
-		print_status( point , PORTA1 );
-
 		sleep(1);
 
-		mask_bits (PORTA1, array, pointer, funcion);
+		mask_bits (PORTA1, array, pointer, bittoggle);
 	}
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+//Sub funciones para el get_char
 #include <time.h>						// Librerias estandar que solo utilizan las proximas funciones
 #include <sys/types.h>
 #include <unistd.h>

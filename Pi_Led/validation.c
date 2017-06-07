@@ -20,7 +20,6 @@ int op_valid (char input)
             case 'n': 
             case 'f': 
             case 't':
-	    case 'g':
             case 27 : 
                 value = TRUE; 
                 break;

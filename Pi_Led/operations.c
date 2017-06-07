@@ -109,8 +109,6 @@ void mask_bits (char puerto, char * array, void * pointer2, void (*funcion) (cha
 {
 	int counter;
 
-	void * pointer;
-
 	for (counter = 0 ;  ( *(array + counter) != 0 ) || (counter < 8) ; ++counter)		
 	{
 		if ( *(array + counter) == '1')
