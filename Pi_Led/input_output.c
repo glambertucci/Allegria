@@ -124,7 +124,7 @@ void toggle_print (void * pointer2, int repeat)
 
 		sleep(1);
 
-		mask_8bits (PORTA1, array, pointer, funcion);
+		mask_bits (PORTA1, array, pointer, funcion);
 	}
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////

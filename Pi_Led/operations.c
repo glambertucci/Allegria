@@ -105,7 +105,7 @@ void bittoggle (char puerto, int bit, void * pointer2)
 }
 
 
-void mask_8bits (char puerto, char * array, void * pointer2, void (*funcion) (char puerto, int bit, void * pointer2))
+void mask_bits (char puerto, char * array, void * pointer2, void (*funcion) (char puerto, int bit, void * pointer2))
 {
 	int counter;
 

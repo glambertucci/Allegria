@@ -42,7 +42,7 @@ int bitget (char puerto, int bit, void * pointer2);
 // char * array : Es el arreglo que contiene a la mascara, debe tener 9 elementos (8 numeros y el terminador) que solo pueden estar seteados en '1' y '0'
 // void * pointer :Es un puntero a void que apunta a una estructura que contiene a los puertos A y B (el tipo de datos debe ser b16_t *)
 // void (*funcion) (char puerto, int bit, void * pointer2)) : Es un puntero a funcion (bitset, bitclr o bittoggle)
-void mask_8bits (char puerto, char * array, void * pointer, void (*funcion) (char puerto, int bit, void * pointer2));
+void mask_bits (char puerto, char * array, void * pointer, void (*funcion) (char puerto, int bit, void * pointer2));
 
 //función all_on solo para raspberry pi
 

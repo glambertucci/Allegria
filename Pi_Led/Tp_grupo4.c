@@ -26,6 +26,7 @@ int main (void)
 	
 	char * mask_array;
 	char short_array[9] = {"00000000"};
+        char all_one[8] = "1111111";
 	int max_bits, i ,mask_error = NOERRORS, errorbit = NOERRORS;
 
 	//Inicialización
@@ -95,7 +96,7 @@ int main (void)
 				}
 			} while (!mask_error);	
 
-			mask_8bits (port , mask_array, pointer, funcion ) ;
+			mask_bits (port , mask_array, pointer, funcion ) ;
 
 			for ( i = 0 ; i < max_bits-1 ; ++i)
 			{
@@ -105,39 +106,18 @@ int main (void)
 			*(mask_array + i) = 0;
 		}
 
-		else if (option == ALLON)
+		else if ((option == ALLON) || (option == ALLOFF))
 		{
-			portd.full_reg= 0xffff;
-			all_leds(TRUE);
+                    switch (option)
+                    {
+                        case ALLOFF : funcion = bitclr;all_leds(ON); break;
+                        case ALLON : funcion = bitset;all_leds(OFF); break;
+                    }
+                    
+                    mask_bits(PORTA,all_one,&(portd.half_reg), funcion);
+
 		}
-		else if (option == ALLOFF)
-		{
-			portd.full_reg= 0;
-			all_leds(FALSE);
-		}
-/*		else if (option == BITGET)
-		{	
-			printf("\nElija el led sobre el cual desea obtener el estado\n");
-			do
-			{
-				bit = get_char();
-				errorbit = bit_validation(bit);
-				if (errorbit == FALSE)
-				{
-					printf("\nHa ingresado un caracter inválido\n");
-				}					
-			}while (errorbit == FALSE);
-			pointer = &(portd.half_reg);			
-			status = bitget (port, (int)(bit - '0'), pointer);
-			if (status == 1)
-			{			
-				printf ("\nEl led está encendido\n");
-			}
-			else
-			{
-				printf ("\nEl led está apagado\n");	
-			}
-		}*/      //todavia no funciona bien
+
 		else if (option == INTERMITENCE)
 		{
 			toggle_print (&(portd.half_reg.porta), 6);
