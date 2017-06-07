@@ -35,7 +35,7 @@ void get_mask (char * string_return, int max_bits)
 		case 8 : string = string_short ; break ;
 		case 16 : string = string_long ; break ;
 	}
-
+	
 	for (counter = 0 ; ( *(string + counter) != 0 ) && ( leave == 0) ; ++ counter)	// copia lo que se ingresa a un string temporal
 	{
 		if (  ( (tecla = getchar()) != '\n' ) )
@@ -47,6 +47,7 @@ void get_mask (char * string_return, int max_bits)
 			leave = 1;
 		}
 	}
+
 
 	lenght = LetterCounter(string , 1,0);
 

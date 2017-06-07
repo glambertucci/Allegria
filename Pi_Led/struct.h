@@ -36,28 +36,4 @@ typedef union				// Union de las formas de mostrar un registro de 16 bits
 
 } port_16_t;
 
-#define B_0 ('0')
-#define B_1 ('1')
-#define B_2 ('2')
-#define B_3 ('3')
-#define B_4 ('4')
-#define B_5 ('5')
-#define B_6 ('6')
-#define B_7 ('7')
-#define MASKON ('n')
-#define MASKOFF ('f')
-#define MASKTOGGLE ('t')
-#define INTERMITENCE ('b')
-#define ALLOFF ('c')
-#define ALLON ('s')
-#define ENDOFPROGAM 27
-
-
-#define LED_1 ("4")
-#define LED_2 ("17")
-#define LED_3 ("27")
-#define LED_4 ("22")
-#define LED_5 ("18")
-#define LED_6 ("23")
-#define LED_7 ("24")
 #endif

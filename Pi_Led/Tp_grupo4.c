@@ -1,10 +1,12 @@
 
 #include <stdio.h>
+#include <unistd.h>
 #include "operations.h"
+#include "operationsdefine.h"
 #include "validation.h"
 #include "input_output.h"
 #include "struct.h"
-#include "Led_print.h"
+#include "R_pin.h"
 
 
 #define PORTA ('a')
@@ -12,40 +14,38 @@
 
 #define PORT_LENGTH (8)
 #define INITSTATE ('0')
-
+#define STARTOPTIONNULL ('p')
 
 int main (void)
 {
-	char option = 'p', port = PORTA, bit;
-	int option_validation = TRUE, status,move_screen, counter_int;	
+	char option = STARTOPTIONNULL, port = PORTA;
+	int option_validation = TRUE, counter;	
 	void * pointer; 	
 
 	void (*funcion) (char puerto , int bit , void * pointer2); 
 	port_16_t portd;
-	portd.full_reg= INITSTATE - 0;
-	
+
 	char * mask_array;
 	char short_array[9] = {"00000000"};
-        char all_one[8] = "1111111";
-	int max_bits, i ,mask_error = NOERRORS, errorbit = NOERRORS;
+        char all_one[8] = {"1111111"};
+	int max_bits, i ,mask_error = NOERRORS;
 
 	//Inicialización
-	
-	print_all_leds(&(portd.half_reg.porta.eight_reg));
+
+	portd.full_reg= INITSTATE - 0;			//inicializacion de la estructura que acompaña a los leds	
+	set_leds(&(portd.half_reg.porta.eight_reg));	//Seteo de pines para el uso de la Ras pi
 
 
-	while ( ( option != ENDOFPROGAM ) && ( port != ENDOFPROGAM ))
+	while ( ( option != ENDOFPROGRAM ) && ( port != ENDOFPROGRAM ))
 	{
-                      
 		printf("\nPor favor ingrese la operación que desee realizar:\n");
-		printf("los numeros del 0 al 7 para prender o apagar los leds\n");	
+		printf("los numeros del 1 al 7 para prender o apagar los leds\n");	//modicado
 		printf("%c para ingresar una máscara para el encendido de leds\n", MASKON);
 		printf("%c para ingresar una máscara para el apagado de leds\n", MASKOFF);
 		printf("%c para ingresar una máscara para invertir el estado de los led\n", MASKTOGGLE);
 		printf("%c para que los led parpadeen\n", INTERMITENCE);
 		printf("%c para apagar todos los led\n", ALLOFF);
 		printf("%c para encender todos los led\n", ALLON);
-		printf("%c para saber el estado de un led\n", BITGET);
 		printf("la tecla ESC para finalizar el programa\n");
 
 		do						//SELECCION DEL USUARIO PARA OPERACION
@@ -81,6 +81,7 @@ int main (void)
 			printf ("\nIngrese la máscara con la que desee operar\n");
 			do 
 			{
+				mask_error = FALSE;
 				get_mask (mask_array , max_bits );
 				mask_error = check_mask (mask_array, max_bits);
 
@@ -108,24 +109,28 @@ int main (void)
                         case ALLON : funcion = bitset; break;
                     }
                     
-                    mask_bits(PORTA,all_one,&(portd.half_reg), funcion);
-                    print_all_leds(&(portd.half_reg.porta.eight_reg));
+                    mask_bits(port,all_one,&(portd.half_reg), funcion);
+                    set_leds(&(portd.half_reg.porta.eight_reg));
 
 		}
 
 		else if (option == INTERMITENCE)
 		{
-			for ( counter_int = 0; counter < 10 ; ++counter)
+			for ( counter = 0; counter < 10 ; ++counter)
 			{
 				funcion = bittoggle;
 				mask_bits(PORTA,all_one,&(portd.half_reg), funcion);
-                   		print_all_leds(&(portd.half_reg.porta.eight_reg));
+                   		set_leds(&(portd.half_reg.porta.eight_reg));
 				sleep(1);
 			}
 			//toggle_print (&(portd.half_reg.porta), 6);
 		}
 		putchar('\n');
 		putchar('\n');
-	}	
+	}
+
+	unset_leds();
+	portd.full_reg= INITSTATE - 0; 		//Para dejar la estructura en el estado incial
+	
 	return 0;
 }
