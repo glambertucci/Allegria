@@ -9,9 +9,11 @@
         <group>
             <file>file:/home/lucas/Programacion/Allegria/Pi_Led/Led_print.c</file>
             <file>file:/home/lucas/Programacion/Allegria/Pi_Led/Led_print.h</file>
+            <file>file:/home/lucas/Programacion/Allegria/Pi_Led/validation.h</file>
+            <file>file:/home/lucas/Programacion/Allegria/Pi_Led/operations.h</file>
             <file>file:/home/lucas/Programacion/Allegria/Pi_Led/Tp_grupo4.c</file>
             <file>file:/home/lucas/Programacion/Allegria/Pi_Led/operations.c</file>
-            <file>file:/home/lucas/Programacion/Allegria/Pi_Led/struct.h</file>
+            <file>file:/home/lucas/Programacion/Allegria/Pi_Led/input_output.c</file>
             <file>file:/home/lucas/Programacion/Allegria/Pi_Led/validation.c</file>
         </group>
     </open-files>
