@@ -94,83 +94,13 @@ void bittoggle (char puerto, int bit, void * pointer2)
 
 	switch (bit)
 	{
-		case 0: if (port->b0) 
-			{				
-				port->b0 = OFF;
-				state_set (LED_1, LED_OFF);
-			} 
-			else
-			{
-				port->b0 = ON;
-				state_set (LED_1, LED_ON); 
-			}			
-			break;
-		case 1: if (port->b1) 
-			{
-				port->b1 = OFF;
-				state_set (LED_2, LED_OFF);
-			}
-			else
-			{
-				port->b1 = ON;
-				state_set (LED_2, LED_ON);
-			}
-			break;
-		case 2: if (port->b2)
-			{
-				port->b2 = OFF;
-				state_set (LED_3, LED_OFF);
-			}
-			else
-			{
-				port->b2 = ON;
-				state_set (LED_3, LED_ON);
-			}
-			break;
-		case 3: if (port->b3)
-			{
-				port->b3 = OFF;
-				state_set (LED_4, LED_OFF);
-			}
-			else
-			{
-				port->b3 = ON;
-				state_set (LED_4, LED_ON);
-			}
-			break;
-		case 4: if (port->b4)
-			{
-				port->b4 = OFF;
-				state_set (LED_5, LED_OFF);
-			}
-			else
-			{
-				port->b4 = ON;
-				state_set (LED_5, LED_ON);
-			}
-			break;
-		case 5: if (port->b5)
-			{
-				port->b5 = OFF;
-				state_set (LED_6, LED_OFF);
-			}
-			else
-			{
-				port->b5 = ON;
-				state_set (LED_6, LED_ON);
-			}
-			break;
-		case 6: if (port->b6)
-			{
-				port->b6 = OFF;
-				state_set (LED_7, LED_OFF);
-			}
-			else 
-			{
-				port->b6 = ON;
-				state_set (LED_7, LED_ON);
-			}
-			break;
+            case 0: ((port->b0) ? (port->b0 = OFF) : (port->b0 = ON)) ; state_set (LED_1, port->b0 + '0'); break;
+            case 1: ((port->b1) ? (port->b1 = OFF) : (port->b1 = ON)) ; state_set (LED_2, port->b1 + '0'); break;
+            case 2: ((port->b2) ? (port->b2 = OFF) : (port->b2 = ON)) ; state_set (LED_3, port->b2 + '0'); break;
+            case 3: ((port->b3) ? (port->b3 = OFF) : (port->b3 = ON)) ; state_set (LED_4, port->b3 + '0'); break;
+            case 4: ((port->b4) ? (port->b4 = OFF) : (port->b4 = ON)) ; state_set (LED_5, port->b4 + '0'); break;
+            case 5: ((port->b5) ? (port->b5 = OFF) : (port->b5 = ON)) ; state_set (LED_6, port->b5 + '0'); break;
+            case 6: ((port->b6) ? (port->b6 = OFF) : (port->b6 = ON)) ; state_set (LED_7, port->b6 + '0'); break;
 	}
 }
 
